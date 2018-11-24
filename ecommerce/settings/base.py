@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Common settings and globals."""
 import datetime
 import os
@@ -650,3 +651,4 @@ OFFER_ASSIGNMENT_EMAIL_DEFAULT_SUBJECT = 'New edX course assignment'
 SAILTHRU_KEY = None
 SAILTHRU_SECRET = None
 
+CURRENCY_SYMBOL = '$'
