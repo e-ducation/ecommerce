@@ -47,6 +47,8 @@ ALLOWED_HOSTS = ['*']
 DICT_UPDATE_KEYS = ('JWT_AUTH',)
 
 CONFIG_FILE = get_env_setting('ECOMMERCE_CFG')
+print '^' * 100
+print CONFIG_FILE
 with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
     config_from_yaml = yaml.load(f)
 
@@ -59,6 +61,9 @@ with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
             vars()[key].update(value)
 
     vars().update(config_from_yaml)
+
+ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['ALIPAY_INFO']
+WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['WECHAT_PAY_INFO']
 
 DB_OVERRIDES = dict(
     PASSWORD=environ.get('DB_MIGRATION_PASS', DATABASES['default']['PASSWORD']),

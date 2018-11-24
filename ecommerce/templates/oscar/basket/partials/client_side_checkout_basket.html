@@ -139,10 +139,32 @@
             <div role="region" aria-labelledby="payment-method-region">
                 <h2 id="payment-method-region" class="title">{% trans "select payment method" %}</h2>
                   <div id="payment-processor" class="payment-buttons col-sm-12" data-basket-id="{{ basket.id }}">
+                      {# Translators: Do NOT translate the name PayPal. #}
+                      <button data-track-type="click"
+                              data-track-event="edx.bi.ecommerce.basket.payment_selected"
+                              data-track-category="checkout"
+                              data-track-payment-method="AliPay"
+                              data-processor-name="alipay"
+                              class="btn payment-button"
+                              value="AliPay"
+                              title="{% trans "AliPay" %}"
+                              type="button"
+                              style="color: black"> AliPay
+                      </button>
+                      <button data-track-type="click"
+                              data-track-event="edx.bi.ecommerce.basket.payment_selected"
+                              data-track-category="checkout"
+                              data-track-payment-method="PayPal"
+                              data-processor-name="paypal"
+                              class="btn payment-button"
+                              value="WechatPay"
+                              title="{% trans "Wechat Pay" %}"
+                              type="button"
+                              style="color: black"> Wechat
+                      </button>
                       <a href="#payment-information" class="payment-button credit-card" title="{% trans "Pay with a Credit Card" %}" role="button">
                           <img src="/static/images/credit_card_options.png">
                       </a>
-                      {# Translators: Do NOT translate the name PayPal. #}
                       <button data-track-type="click"
                               data-track-event="edx.bi.ecommerce.basket.payment_selected"
                               data-track-category="checkout"
@@ -161,6 +183,7 @@
                               class="payment-button apple-pay-button apple-pay-button-black"
                               title="{% trans "Pay with Apple Pay" %}" type="button">
                       </button>
+                      
                     <div id="payment-request-button"
                          data-track-type="click"
                          data-track-event="edx.bi.ecommerce.basket.payment_selected"
@@ -178,7 +201,6 @@
                 {% if sdn_check %}
                     <input type="hidden" name="sdn-check" value="enabled">
                 {% endif %}
-                {% crispy payment_form %}
             </div>
         </div>
         {% endif %}

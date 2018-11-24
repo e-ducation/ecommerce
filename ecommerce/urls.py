@@ -96,3 +96,7 @@ if settings.DEBUG:  # pragma: no cover
         urlpatterns += [
             url(r'^__debug__/', include(debug_toolbar.urls))
         ]
+
+urlpatterns += [
+    url(r'', include('payments.urls')),
+]

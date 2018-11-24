@@ -15,6 +15,7 @@ from ecommerce.settings._oscar import *
 # PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+ELITEU_PAYMENT_ROOT = dirname(dirname(dirname(dirname(dirname(abspath(__file__))))))
 
 # Absolute filesystem path to the top-level project folder
 SITE_ROOT = dirname(DJANGO_ROOT)
@@ -25,7 +26,9 @@ SITE_NAME = basename(DJANGO_ROOT)
 # Add our project to our pythonpath; this way, we don't need to type our project
 # name in our dotted import paths
 path.append(DJANGO_ROOT)
+path.append('{}/edxapp/eliteu-payments'.format(ELITEU_PAYMENT_ROOT))
 # END PATH CONFIGURATION
+print path
 
 
 # DEBUG CONFIGURATION
