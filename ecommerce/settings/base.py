@@ -72,7 +72,7 @@ TIME_ZONE = 'America/New_York'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'zh-cn'
 
 SITE_ID = 1
 
@@ -80,6 +80,7 @@ SITE_ID = 1
 USE_I18N = True
 
 LANGUAGES = (
+    ('zh-cn', _('zh-cn')),
     ('en', _('English')),
     ('es', _('Spanish')),
     ('es-419', _('Spanish (Latin American)')),
@@ -493,7 +494,7 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 # Detailed information at: https://docs.djangoproject.com/en/dev/ref/settings/
 SESSION_COOKIE_NAME = 'ecommerce_sessionid'
 CSRF_COOKIE_NAME = 'ecommerce_csrftoken'
-LANGUAGE_COOKIE_NAME = 'ecommerce_language'
+LANGUAGE_COOKIE_NAME = 'openedx-language-preference'
 SESSION_COOKIE_SECURE = False
 # END COOKIE CONFIGURATION
 
