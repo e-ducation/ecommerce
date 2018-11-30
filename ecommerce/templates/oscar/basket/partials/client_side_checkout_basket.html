@@ -139,6 +139,7 @@
             <div role="region" aria-labelledby="payment-method-region">
                 <h2 id="payment-method-region" class="title">{% trans "select payment method" %}</h2>
                   <div id="payment-processor" class="payment-buttons col-sm-12" data-basket-id="{{ basket.id }}">
+                      {% if enable_alipay_wechatpay %}
                       <button data-track-type="click"
                               data-track-event="edx.bi.ecommerce.basket.payment_selected"
                               data-track-category="checkout"
@@ -159,6 +160,7 @@
                               title="{% trans "Wechat Pay" %}"
                               type="button">
                       </button>
+                      {% endif %}
                       <a href="#payment-information" class="payment-button credit-card" title="{% trans "Pay with a Credit Card" %}" role="button">
                           <img src="/static/images/credit_card_options.png">
                       </a>

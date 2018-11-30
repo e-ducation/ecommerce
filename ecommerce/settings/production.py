@@ -48,6 +48,8 @@ DICT_UPDATE_KEYS = ('JWT_AUTH',)
 
 CONFIG_FILE = get_env_setting('ECOMMERCE_CFG')
 
+ENABLE_ALIPAY_WECHATPAY = False
+
 with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
     config_from_yaml = yaml.load(f)
 
@@ -61,8 +63,15 @@ with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
 
     vars().update(config_from_yaml)
 
-ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['alipay']
-WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['wechatpay']
+if ENABLE_ALIPAY_WECHATPAY:
+    ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['alipay']
+    WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['wechatpay']
+    PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS)
+    PAYMENT_PROCESSORS.extend([
+        'ecommerce.extensions.payment.processors.alipay.AliPay',
+        'ecommerce.extensions.payment.processors.wechatpay.WechatPay',
+    ])
+    PAYMENT_PROCESSORS = tuple(PAYMENT_PROCESSORS)
 
 DB_OVERRIDES = dict(
     PASSWORD=environ.get('DB_MIGRATION_PASS', DATABASES['default']['PASSWORD']),

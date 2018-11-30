@@ -8,6 +8,7 @@ from urllib import urlencode
 import dateutil.parser
 import newrelic.agent
 import waffle
+from django.conf import settings
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.html import escape
@@ -436,6 +437,7 @@ class BasketSummaryView(BasketView):
             'max_seat_quantity': 100,
             'payment_processors': payment_processors,
             'total_benefit': total_benefit,
+            'enable_alipay_wechatpay': settings.ENABLE_ALIPAY_WECHATPAY,
             'line_price': (self.request.basket.total_incl_tax_excl_discounts / num_of_items) if num_of_items > 0 else 0
         })
         return context
