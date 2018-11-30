@@ -364,6 +364,24 @@
                 }
             }
 
+            &.payment-processor-alipay {
+                background-image: url('/static/images/alipay_logo.png');
+                background-size:100% 100%;
+
+                &:focus {
+                    outline: dotted 1px #000;
+                }
+            }
+
+            &.payment-processor-wechatpay {
+                background-image: url('/static/images/wechatpay_logo.png');
+                background-size:100% 100%;
+
+                &:focus {
+                    outline: dotted 1px #000;
+                }
+            }
+
             &.credit-card {
                 @include float(left);
                 border: 1px solid palette(grayscale, base);

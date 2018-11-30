@@ -1,27 +1,28 @@
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
 import logging
 
 from decimal import Decimal
 from urlparse import urljoin
 from django.urls import reverse
-from oscar.core.loading import get_model
+from django.conf import settings
 from ecommerce.core.url_utils import get_ecommerce_url
 from ecommerce.extensions.payment.processors import BasePaymentProcessor, HandledProcessorResponse
-from ecommerce.extensions.payment.utils import create_trade_id, str_to_specify_digits
-from payments.alipay.alipay import create_direct_pay_by_user
+from ecommerce.extensions.payment.utils import create_trade_id
+from payments.wechatpay.wxpay import WxPayConf_pub, UnifiedOrder_pub
+from oscar.core.loading import get_model
 
 PaymentProcessorResponse = get_model('payment', 'PaymentProcessorResponse')
 
 logger = logging.getLogger(__name__)
 
 
-class AliPay(BasePaymentProcessor):
+class WechatPay(BasePaymentProcessor):
 
-    NAME = 'alipay'
+    NAME = 'wechatpay'
     DEFAULT_PROFILE_NAME = 'default'
 
     def __init__(self, site):
-        super(AliPay, self).__init__(site)
+        super(WechatPay, self).__init__(site)
 
     @property
     def cancel_url(self):
@@ -33,35 +34,38 @@ class AliPay(BasePaymentProcessor):
 
     def get_transaction_parameters(self, basket, request=None, use_client_side_checkout=False, **kwargs):
         """
-        approval_url
         """
-        trade_id = create_trade_id(basket.id)
+        out_trade_no = create_trade_id(basket.id)
         body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
-        subject = "BUY COURSE"
-        total_fee = str_to_specify_digits(str(basket.total_incl_tax))
-        total_fee = str_to_specify_digits(str(0.01))
-        http_host = request.META.get('HTTP_HOST')
-        extra_common_param = urljoin(get_ecommerce_url(), reverse('alipay:execute'))
+        order_price = basket.total_incl_tax
+        total_fee = int(order_price * 100)
+        total_fee = 1
+        attach_data = urljoin(get_ecommerce_url(), reverse('wechatpay:execute'))
 
-        approval_url = create_direct_pay_by_user(
-            trade_id,
-            body,
-            subject,
-            total_fee,
-            http_host,
-            extra_common_param=extra_common_param
-        )
-        if not PaymentProcessorResponse.objects.filter(processor_name=self.NAME, basket=basket).update(transaction_id=trade_id):
-            self.record_processor_response({}, transaction_id=trade_id, basket=basket)
+        wxpayconf_pub = WxPayConf_pub()
+        unifiedorder_pub = UnifiedOrder_pub()
+        unifiedorder_pub.setParameter("body", body)
+        unifiedorder_pub.setParameter("out_trade_no", out_trade_no)
+        unifiedorder_pub.setParameter("total_fee", str(total_fee))
+        unifiedorder_pub.setParameter("notify_url", wxpayconf_pub.NOTIFY_URL)
+        unifiedorder_pub.setParameter("trade_type", "NATIVE")
+        unifiedorder_pub.setParameter("attach", attach_data)
+
+        code_url = unifiedorder_pub.getCodeUrl()
+        approval_url = get_ecommerce_url() + reverse("wechatpay:page")
+        if not PaymentProcessorResponse.objects.filter(processor_name=self.NAME, basket=basket).update(transaction_id=out_trade_no):
+            self.record_processor_response({}, transaction_id=out_trade_no, basket=basket)
 
         parameters = {
             'payment_page_url': approval_url,
+            'code_url': code_url,
+            'basket_id': basket.id,
+            'request_page': '{payurl}?out_trade_no={param}'.format(
+                payurl=(get_ecommerce_url() + reverse("wechatpay:result")), param=out_trade_no),
         }
         return parameters
 
     def handle_processor_response(self, response, basket=None):
-        """
-        """
         transaction_id = response.get('out_trade_no')
         PaymentProcessorResponse.objects.filter(
             processor_name=self.NAME,

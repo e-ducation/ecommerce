@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 
-from ecommerce.extensions.payment.views import PaymentFailedView, SDNFailure, cybersource, paypal, stripe, alipay
+from ecommerce.extensions.payment.views import PaymentFailedView, SDNFailure, cybersource, paypal, stripe,\
+    alipay, wechatpay
 
 CYBERSOURCE_APPLE_PAY_URLS = [
     url(r'^authorize/$', cybersource.CybersourceApplePayAuthorizationView.as_view(), name='authorize'),
@@ -26,8 +27,15 @@ STRIPE_URLS = [
 ]
 
 ALIPAY_URLS = [
-    url(r'^return/$', alipay.AlipayPaymentExecutionView.as_view(), name='return'),
-    url(r'^notify/$', alipay.AlipayPaymentExecutionView.as_view(), name='notify'),
+    url(r'^execute/$', alipay.AlipayPaymentExecutionView.as_view(), name='execute'),
+    url(r'^result/$', alipay.AlipayPaymentResultView.as_view(), name='result'),
+]
+
+WECHATPAY_URLS = [
+    url(r'^page/$', wechatpay.WechatpayPaymentPageView.as_view(), name='page'),
+    url(r'^order_query/(?P<pk>\d+)$', wechatpay.WechatpayOrderQuery.as_view(), name='order_query'),
+    url(r'^execute/$', wechatpay.WechatpayPaymentExecutionView.as_view(), name='execute'),
+    url(r'^result/$', wechatpay.WechatpayPaymentResultView.as_view(), name='result'),
 ]
 
 urlpatterns = [
@@ -37,4 +45,5 @@ urlpatterns = [
     url(r'^sdn/', include(SDN_URLS, namespace='sdn')),
     url(r'^stripe/', include(STRIPE_URLS, namespace='stripe')),
     url(r'^alipay/', include(ALIPAY_URLS, namespace='alipay')),
+    url(r'^wechatpay/', include(WECHATPAY_URLS, namespace='wechatpay')),
 ]

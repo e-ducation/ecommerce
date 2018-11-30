@@ -26,9 +26,8 @@ SITE_NAME = basename(DJANGO_ROOT)
 # Add our project to our pythonpath; this way, we don't need to type our project
 # name in our dotted import paths
 path.append(DJANGO_ROOT)
-path.append('{}/edxapp/eliteu-payments'.format(ELITEU_PAYMENT_ROOT))
+path.append('{payment_root}/edxapp/eliteu-payments'.format(payment_root=ELITEU_PAYMENT_ROOT))
 # END PATH CONFIGURATION
-print path
 
 
 # DEBUG CONFIGURATION

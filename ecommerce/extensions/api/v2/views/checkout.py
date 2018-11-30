@@ -43,12 +43,6 @@ class CheckoutView(APIView):
 
         # Return the payment info
         try:
-            print '$' * 100
-            print payment_processor_name
-            print request.site
-            from django.conf import settings
-            print settings.PAYMENT_PROCESSORS
-            print '$' * 100
             payment_processor = get_processor_class_by_name(payment_processor_name)(request.site)
         except ProcessorNotFoundError:
             logger.exception('Failed to get payment processor [%s]. basket id: [%s]. price: [%s]',
@@ -60,8 +54,6 @@ class CheckoutView(APIView):
 
         parameters = payment_processor.get_transaction_parameters(basket, request=request)
         payment_page_url = parameters.pop('payment_page_url')
-        print '#' * 100
-        print payment_page_url
 
         data = {
             'payment_form_data': parameters,

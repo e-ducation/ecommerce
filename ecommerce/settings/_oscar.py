@@ -104,6 +104,7 @@ PAYMENT_PROCESSORS = (
     'ecommerce.extensions.payment.processors.paypal.Paypal',
     'ecommerce.extensions.payment.processors.stripe.Stripe',
     'ecommerce.extensions.payment.processors.alipay.AliPay',
+    'ecommerce.extensions.payment.processors.wechatpay.WechatPay',
 )
 
 PAYMENT_PROCESSOR_RECEIPT_PATH = '/checkout/receipt/'

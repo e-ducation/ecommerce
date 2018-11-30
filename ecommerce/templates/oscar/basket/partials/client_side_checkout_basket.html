@@ -145,22 +145,21 @@
                               data-track-category="checkout"
                               data-track-payment-method="AliPay"
                               data-processor-name="alipay"
-                              class="btn payment-button"
+                              class="btn payment-button payment-processor-alipay"
                               value="AliPay"
                               title="{% trans "AliPay" %}"
-                              type="button"
-                              style="color: black"> AliPay
+                              type="button">
                       </button>
                       <button data-track-type="click"
                               data-track-event="edx.bi.ecommerce.basket.payment_selected"
                               data-track-category="checkout"
-                              data-track-payment-method="PayPal"
-                              data-processor-name="paypal"
-                              class="btn payment-button"
+                              data-track-payment-method="WechatPay"
+                              data-processor-name="wechatpay"
+                              {% comment %} class="btn payment-button payment-processor-wechatpay" {% endcomment %}
+                              class="btn payment-button payment-processor-wechatpay"
                               value="WechatPay"
                               title="{% trans "Wechat Pay" %}"
-                              type="button"
-                              style="color: black"> Wechat
+                              type="button">
                       </button>
                       <a href="#payment-information" class="payment-button credit-card" title="{% trans "Pay with a Credit Card" %}" role="button">
                           <img src="/static/images/credit_card_options.png">

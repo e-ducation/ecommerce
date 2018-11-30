@@ -47,8 +47,7 @@ ALLOWED_HOSTS = ['*']
 DICT_UPDATE_KEYS = ('JWT_AUTH',)
 
 CONFIG_FILE = get_env_setting('ECOMMERCE_CFG')
-print '^' * 100
-print CONFIG_FILE
+
 with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
     config_from_yaml = yaml.load(f)
 
