@@ -61,8 +61,8 @@ with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
 
     vars().update(config_from_yaml)
 
-ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['ALIPAY_INFO']
-WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['WECHAT_PAY_INFO']
+ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['alipay']
+WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['wechatpay']
 
 DB_OVERRIDES = dict(
     PASSWORD=environ.get('DB_MIGRATION_PASS', DATABASES['default']['PASSWORD']),
