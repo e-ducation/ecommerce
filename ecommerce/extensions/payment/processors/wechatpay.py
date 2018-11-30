@@ -39,7 +39,6 @@ class WechatPay(BasePaymentProcessor):
         body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
         order_price = basket.total_incl_tax
         total_fee = int(order_price * 100)
-        total_fee = 1
         attach_data = urljoin(get_ecommerce_url(), reverse('wechatpay:execute'))
 
         wxpayconf_pub = WxPayConf_pub()

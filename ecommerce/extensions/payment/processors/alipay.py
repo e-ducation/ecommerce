@@ -39,7 +39,6 @@ class AliPay(BasePaymentProcessor):
         body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
         subject = "BUY COURSE"
         total_fee = str_to_specify_digits(str(basket.total_incl_tax))
-        total_fee = str_to_specify_digits(str(0.01))
         http_host = request.META.get('HTTP_HOST')
         extra_common_param = urljoin(get_ecommerce_url(), reverse('alipay:execute'))
 

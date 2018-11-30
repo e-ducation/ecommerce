@@ -1,16 +1,13 @@
 import logging
 
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django.views.generic import View, TemplateView
+from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from oscar.core.loading import get_model
 from ecommerce.extensions.payment.processors.wechatpay import WechatPay
-from ecommerce.extensions.checkout.mixins import EdxOrderPlacementMixin
 from ecommerce.extensions.payment.views.alipay import AlipayPaymentExecutionView, AlipayPaymentResultView
 from payments.wechatpay.wxpay import OrderQuery_pub
 
