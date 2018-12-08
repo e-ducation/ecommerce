@@ -721,3 +721,87 @@
         }
     }
 }
+
+.basket{
+    #summary{
+        padding-right: 20px;
+       
+    }
+    .summary-container{
+        background-color: #ffffff;
+        border: solid 1px #dfe4ea;
+        padding: 20px;
+        border-radius: 4px;
+        min-height: 600px;
+    }
+    
+    #payment-method-region,#cart-region{
+        font-size: 16px;
+        color: #2e313c;
+    }
+    .product-name{
+        font-size: 14px;
+        color: #2e313c;
+    }
+    .seat-type{
+        font-size: 14px;
+        color: #656d78;
+    }
+    
+}
+.basket-client-side .title{
+    font-size: 14px;
+    color: #656d78;
+    font-weight: 600;
+}
+.basket .container{
+    padding: 25px 0 30px 0;
+    background: inherit;
+}
+.basket-client-side .container #summary .row{
+    padding-bottom: 16px;
+}
+.basket-client-side .container #summary .description{
+    font-size: 14px;
+    color: #2e313c;
+    font-weight: 600;
+    font-weight: normal;
+}
+.basket-client-side .container #summary .price{
+    color: #2e313c;
+    font-size: 14px;
+    font-weight: 600
+}
+.basket-client-side .container #summary #basket-total{
+    border-bottom: solid 1px #b6dcfe;
+    margin-bottom: 20px;
+}
+.basket-client-side .container #summary #voucher-information .use-voucher label{
+    color: #2e313c;
+    font-size: 16px;
+    font-weight: 600;
+}
+.basket-client-side .container #summary #voucher-information .use-voucher #id_code{
+    width: 212px;
+    border: 1px solid #99b5d1;
+    display: block;
+    float: left;
+    border-radius: 0;
+    height: 34px;
+}
+.basket #apply-voucher-button{
+    background: #4788c7;
+    color: white;
+    border-radius: 0;
+    width: 84px;
+    height: 34px;
+    line-height: 16px;
+}
+.basket.basket-client-side:focus{
+    border: none;
+}
+
+.basket-client-side .container .payment-form #payment-information{
+    border: solid 1px #dfe4ea;
+    min-height: 600px;
+}

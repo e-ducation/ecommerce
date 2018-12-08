@@ -19,7 +19,7 @@
             {{ error_summary }}
           </h3>
           <div class="copy">
-            <p>{% trans "The specified order could not be located. Please ensure that the URL is correct, and try again." %}</p>
+            <p>{% trans "The specified order could not be located. " %}</p>
             <br/>
           </div>
           <div class="msg">
@@ -29,6 +29,7 @@
               {% endcaptureas %}
 
               {% blocktrans with link_end="</a>" %}
+                Please ensure that the URL is correct, and try again.
                 You may also view your previous orders on the {{ link_start }}Account Settings{{ link_end }}
                 page.
               {% endblocktrans %}

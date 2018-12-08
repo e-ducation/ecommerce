@@ -31,7 +31,7 @@
 
       <div class="list-info">
         <div class="info-item payment-info row">
-          <div class="copy col-md-8">
+          <div class="copy">
             <div class="confirm-message">
               {% captureas link_start %}
                 <a href="mailto:{{ order.user.email }}">
@@ -59,17 +59,19 @@
             {% endif %}
           </div>
 
-          <div class="order-headers order-summary col-md-4">
-            <dl>
-              <dt>{% trans "Order Number:" %}</dt>
-              <dd>{{ order.number }}</dd>
-              {% if payment_method %}
-                <dt>{% trans "Payment Method:" %}</dt>
-                <dd>{{ payment_method }}</dd>
-              {% endif %}
-              <dt>{% trans "Order Date:" %}</dt>
-              <dd>{{ order.date_placed|date:"E d, Y" }}</dd>
-            </dl>
+          <div class="order-headers order-summary">
+            <div>
+              <span class="order-summary-label">{% trans "Order Number:" %}</span>
+              <span class="order-summary-value">{{ order.number }}</span>
+            </div>
+            <div>
+              <span class="order-summary-label">{% trans "Payment Method:" %}</span>
+              <span class="order-summary-value">{{ payment_method }}</span>
+            </div>
+            <div>
+              <span class="order-summary-label">{% trans "Order Date:" %}</span>
+              <span class="order-summary-value">{{ order.date_placed|date:"E d, Y" }}</span>
+            </div>
           </div>
         </div>
 
@@ -179,7 +181,7 @@
         </div>
       {% endif %}
       <div id="cta-nav-links" class="row">
-        <div class="col-xs-12 text-right">
+        <div class="col-xs-12 text-center">
           {% if not show_verification_banner %}
           <a class="dashboard-link nav-link" href="{{ order_dashboard_url }}">
             {% trans "Go to dashboard" %}
