@@ -1,17 +1,22 @@
 # -*- coding:utf-8 -*-
 import logging
+import qrcode
+import base64
 
+from io import BytesIO
 from decimal import Decimal
 from urlparse import urljoin
 from django.urls import reverse
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from ecommerce.core.url_utils import get_ecommerce_url
 from ecommerce.extensions.payment.processors import BasePaymentProcessor, HandledProcessorResponse
 from ecommerce.extensions.payment.utils import create_trade_id
 from payments.wechatpay.wxpay import WxPayConf_pub, UnifiedOrder_pub
-from oscar.core.loading import get_model
+from oscar.core.loading import get_model, get_class
 
 PaymentProcessorResponse = get_model('payment', 'PaymentProcessorResponse')
+Applicator = get_class('offer.applicator', 'Applicator')
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +40,17 @@ class WechatPay(BasePaymentProcessor):
     def get_transaction_parameters(self, basket, request=None, use_client_side_checkout=False, **kwargs):
         """
         """
+        # Get the basket, and make sure it belongs to the current user.
+        try:
+            basket = request.user.baskets.get(id=basket.id)
+        except ObjectDoesNotExist:
+            return {}
+
+        # Freeze the basket so that it cannot be modified
+        basket.strategy = request.strategy
+        Applicator().apply(basket, request.user, request)
+        # basket.freeze()
+
         out_trade_no = create_trade_id(basket.id)
         body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
         order_price = basket.total_incl_tax
@@ -51,16 +67,15 @@ class WechatPay(BasePaymentProcessor):
         unifiedorder_pub.setParameter("attach", attach_data)
 
         code_url = unifiedorder_pub.getCodeUrl()
-        approval_url = get_ecommerce_url() + reverse("wechatpay:page")
+        img = qrcode.make(code_url)
+        buf = BytesIO()
+        img.save(buf, format="PNG")
+        qrcode_img = base64.b64encode(buf.getvalue())
         if not PaymentProcessorResponse.objects.filter(processor_name=self.NAME, basket=basket).update(transaction_id=out_trade_no):
             self.record_processor_response({}, transaction_id=out_trade_no, basket=basket)
 
         parameters = {
-            'payment_page_url': approval_url,
-            'code_url': code_url,
-            'basket_id': basket.id,
-            'request_page': '{payurl}?out_trade_no={param}'.format(
-                payurl=(get_ecommerce_url() + reverse("wechatpay:result")), param=out_trade_no),
+            'qrcode_img': qrcode_img,
         }
         return parameters
 
@@ -73,7 +88,7 @@ class WechatPay(BasePaymentProcessor):
 
         total = Decimal(response.get('total_fee'))
         email = response.get('buyer_email')
-        label = 'PayPal ({})'.format(email) if email else 'PayPal Account'
+        label = 'WechatPay ({})'.format(email) if email else 'WechatPay Account'
         return HandledProcessorResponse(
             transaction_id=transaction_id,
             total=total,

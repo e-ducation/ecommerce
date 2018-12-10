@@ -337,6 +337,12 @@ class BasketSummaryView(BasketView):
 
         if payment_processor_class:
             payment_processor = payment_processor_class(self.request.site)
+            wechatpay_code_url = ''
+            for p in payment_processors:
+                if p.NAME == 'wechatpay':
+                    wechatpay_code_url = p(self.request.site).get_transaction_parameters(
+                        self.request.basket, request=self.request).get('qrcode_img', '')
+                    break
             current_year = datetime.today().year
 
             return {
@@ -350,6 +356,10 @@ class BasketSummaryView(BasketView):
                     label_suffix=''
                 ),
                 'paypal_enabled': 'paypal' in (p.NAME for p in payment_processors),
+                'cybersource_enabled': 'cybersource' in (p.NAME for p in payment_processors),
+                'alipay_enabled': 'alipay' in (p.NAME for p in payment_processors),
+                'wechatpay_enabled': 'wechatpay' in (p.NAME for p in payment_processors),
+                'wechatpay_code_url': wechatpay_code_url,
                 # Assumption is that the credit card duration is 15 years
                 'years': range(current_year, current_year + 16),
             }
@@ -437,7 +447,6 @@ class BasketSummaryView(BasketView):
             'max_seat_quantity': 100,
             'payment_processors': payment_processors,
             'total_benefit': total_benefit,
-            'enable_alipay_wechatpay': settings.ENABLE_ALIPAY_WECHATPAY,
             'line_price': (self.request.basket.total_incl_tax_excl_discounts / num_of_items) if num_of_items > 0 else 0
         })
         return context

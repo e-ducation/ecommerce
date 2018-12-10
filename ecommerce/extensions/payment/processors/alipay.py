@@ -69,7 +69,7 @@ class AliPay(BasePaymentProcessor):
 
         total = Decimal(response.get('total_fee'))
         email = response.get('buyer_email')
-        label = 'PayPal ({})'.format(email) if email else 'PayPal Account'
+        label = 'AliPay ({})'.format(email) if email else 'AliPay Account'
         return HandledProcessorResponse(
             transaction_id=transaction_id,
             total=total,

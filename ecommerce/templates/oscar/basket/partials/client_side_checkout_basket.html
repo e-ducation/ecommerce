@@ -128,43 +128,22 @@
     {% endif %}
 </div>
 
-
 <form id="paymentForm" class="payment-form form-horizontal" method="post" aria-live="polite">
     {% csrf_token %}
 
     <div id="payment-information" class="col-sm-7">
         {% if not free_basket %}
-        {% if paypal_enabled %}
         <div id="payment-method-information" class="placeholder row">
             <div role="region" aria-labelledby="payment-method-region">
                 <h2 id="payment-method-region" class="title">{% trans "select payment method" %}</h2>
                   <div id="payment-processor" class="payment-buttons col-sm-12" data-basket-id="{{ basket.id }}">
-                      {% if enable_alipay_wechatpay %}
-                      <button data-track-type="click"
-                              data-track-event="edx.bi.ecommerce.basket.payment_selected"
-                              data-track-category="checkout"
-                              data-track-payment-method="AliPay"
-                              data-processor-name="alipay"
-                              class="btn payment-button payment-processor-alipay"
-                              value="AliPay"
-                              title="{% trans "AliPay" %}"
-                              type="button">
-                      </button>
-                      <button data-track-type="click"
-                              data-track-event="edx.bi.ecommerce.basket.payment_selected"
-                              data-track-category="checkout"
-                              data-track-payment-method="WechatPay"
-                              data-processor-name="wechatpay"
-                              class="btn payment-button payment-processor-wechatpay"
-                              value="WechatPay"
-                              title="{% trans "Wechat Pay" %}"
-                              type="button">
-                      </button>
-                      {% endif %}
+                      {% if cybersource_enabled %}
                       <a href="#payment-information" class="payment-button credit-card" title="{% trans "Pay with a Credit Card" %}" role="button">
                           <img src="/static/images/credit_card_options.png">
                       </a>
+                      {% endif %}
                       {# Translators: Do NOT translate the name PayPal. #}
+                      {% if paypal_enabled %}
                       <button data-track-type="click"
                               data-track-event="edx.bi.ecommerce.basket.payment_selected"
                               data-track-category="checkout"
@@ -175,6 +154,7 @@
                               title="{% trans "Pay with PayPal" %}"
                               type="button">
                       </button>
+                      {% endif %}
                       <button id="applePayBtn" lang="{{ LANGUAGE_CODE|default:"en-us" }}" style="display:none"
                               data-track-type="click"
                               data-track-event="edx.bi.ecommerce.basket.payment_selected"
@@ -183,6 +163,29 @@
                               class="payment-button apple-pay-button apple-pay-button-black"
                               title="{% trans "Pay with Apple Pay" %}" type="button">
                       </button>
+                      {% if wechatpay_enabled %}
+                      <button data-track-type="click"
+                              data-track-event="edx.bi.ecommerce.basket.payment_selected"
+                              data-track-category="checkout"
+                              class="btn payment-button payment-processor-wechatpay"
+                              value="WechatPay"
+                              title="{% trans "Wechat Pay" %}"
+                              type="button">
+                      </button>
+                      <img src="data:image/png;base64,{{wechatpay_code_url}}" width="500px" />
+                      {% endif %}
+                      {% if alipay_enabled %}
+                      <button data-track-type="click"
+                              data-track-event="edx.bi.ecommerce.basket.payment_selected"
+                              data-track-category="checkout"
+                              data-track-payment-method="AliPay"
+                              data-processor-name="alipay"
+                              class="btn payment-button payment-processor-alipay"
+                              value="AliPay"
+                              title="{% trans "AliPay" %}"
+                              type="button">
+                      </button>
+                      {% endif %}
                     <div id="payment-request-button"
                          data-track-type="click"
                          data-track-event="edx.bi.ecommerce.basket.payment_selected"
@@ -193,7 +196,7 @@
                   </div>
             </div>
         </div>
-        {% endif %}
+        {% if cybersource_enabled %}
         <div id="card-holder-information" class="form-input-elements placeholder row">
             <div role="region" aria-labelledby="card-holder-information-region">
                 <h2 id="card-holder-information-region" class="title">{% trans "card holder information" %}</h2>
@@ -204,8 +207,10 @@
             </div>
         </div>
         {% endif %}
+        {% endif %}
         <div class="form-input-elements placeholder">
             <div role="region" {% if not free_basket %}aria-labelledby="billing-information-region"{% endif %}>
+                {% if cybersource_enabled %}
                 {% if not free_basket %}
                     <h2 id="billing-information-region" class="title">{% trans "billing information" %}</h2>
                 {% if not paypal_enabled %}
@@ -262,6 +267,7 @@
                     </div>
                 </div>
                 {% endif %}
+                {% endif %}
 
                 <div class="payment-button col-sm-6 col-sm-offset-6 col-xs-12">
                 {% if free_basket %}
@@ -273,6 +279,7 @@
                         {% trans "Place Order" %}
                     </a>
                 {% else %}
+                    {% if cybersource_enabled %}
                     <button id="payment-button" type="submit" class="btn btn-primary btn-large col-sm-12 col-xs-12"
                             data-track-type="click"
                             data-track-event="edx.bi.ecommerce.basket.payment_selected"
@@ -282,6 +289,7 @@
                             data-track-checkout-type="client_side">
                       {% trans "Place Order" %}
                     </button>
+                    {% endif %}
                 {% endif %}
                 </div>
             </div>
