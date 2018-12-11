@@ -46,38 +46,44 @@ class WechatPay(BasePaymentProcessor):
         except ObjectDoesNotExist:
             return {}
 
-        # Freeze the basket so that it cannot be modified
-        basket.strategy = request.strategy
-        Applicator().apply(basket, request.user, request)
-        # basket.freeze()
+        try:
+            # Freeze the basket so that it cannot be modified
+            basket.strategy = request.strategy
+            Applicator().apply(basket, request.user, request)
+            # basket.freeze()
+            if basket.total_incl_tax <= 0:
+                return {}
 
-        out_trade_no = create_trade_id(basket.id)
-        body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
-        order_price = basket.total_incl_tax
-        total_fee = int(order_price * 100)
-        attach_data = urljoin(get_ecommerce_url(), reverse('wechatpay:execute'))
+            out_trade_no = create_trade_id(basket.id)
+            body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
+            order_price = basket.total_incl_tax
+            total_fee = int(order_price * 100)
+            attach_data = urljoin(get_ecommerce_url(), reverse('wechatpay:execute'))
 
-        wxpayconf_pub = WxPayConf_pub()
-        unifiedorder_pub = UnifiedOrder_pub()
-        unifiedorder_pub.setParameter("body", body)
-        unifiedorder_pub.setParameter("out_trade_no", out_trade_no)
-        unifiedorder_pub.setParameter("total_fee", str(total_fee))
-        unifiedorder_pub.setParameter("notify_url", wxpayconf_pub.NOTIFY_URL)
-        unifiedorder_pub.setParameter("trade_type", "NATIVE")
-        unifiedorder_pub.setParameter("attach", attach_data)
+            wxpayconf_pub = WxPayConf_pub()
+            unifiedorder_pub = UnifiedOrder_pub()
+            unifiedorder_pub.setParameter("body", body)
+            unifiedorder_pub.setParameter("out_trade_no", out_trade_no)
+            unifiedorder_pub.setParameter("total_fee", str(total_fee))
+            unifiedorder_pub.setParameter("notify_url", wxpayconf_pub.NOTIFY_URL)
+            unifiedorder_pub.setParameter("trade_type", "NATIVE")
+            unifiedorder_pub.setParameter("attach", attach_data)
 
-        code_url = unifiedorder_pub.getCodeUrl()
-        img = qrcode.make(code_url)
-        buf = BytesIO()
-        img.save(buf, format="PNG")
-        qrcode_img = base64.b64encode(buf.getvalue())
-        if not PaymentProcessorResponse.objects.filter(processor_name=self.NAME, basket=basket).update(transaction_id=out_trade_no):
-            self.record_processor_response({}, transaction_id=out_trade_no, basket=basket)
+            code_url = unifiedorder_pub.getCodeUrl()
+            img = qrcode.make(code_url)
+            buf = BytesIO()
+            img.save(buf, format="PNG")
+            qrcode_img = base64.b64encode(buf.getvalue())
+            if not PaymentProcessorResponse.objects.filter(processor_name=self.NAME, basket=basket).update(transaction_id=out_trade_no):
+                self.record_processor_response({}, transaction_id=out_trade_no, basket=basket)
 
-        parameters = {
-            'qrcode_img': qrcode_img,
-        }
-        return parameters
+            parameters = {
+                'qrcode_img': qrcode_img,
+            }
+            return parameters
+        except Exception, e:
+            logger.exception(e)
+        return {}
 
     def handle_processor_response(self, response, basket=None):
         transaction_id = response.get('out_trade_no')
