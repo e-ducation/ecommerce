@@ -43,10 +43,8 @@ if settings.ENABLE_ALIPAY_WECHATPAY:
         url(r'^result/$', alipay.AlipayPaymentResultView.as_view(), name='result'),
     ]
     WECHATPAY_URLS = [
-        url(r'^page/$', wechatpay.WechatpayPaymentPageView.as_view(), name='page'),
         url(r'^order_query/(?P<pk>\d+)$', wechatpay.WechatpayOrderQuery.as_view(), name='order_query'),
         url(r'^execute/$', wechatpay.WechatpayPaymentExecutionView.as_view(), name='execute'),
-        url(r'^result/$', wechatpay.WechatpayPaymentResultView.as_view(), name='result'),
     ]
     urlpatterns.append(url(r'^alipay/', include(ALIPAY_URLS, namespace='alipay')))
     urlpatterns.append(url(r'^wechatpay/', include(WECHATPAY_URLS, namespace='wechatpay')))

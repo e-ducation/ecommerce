@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from oscar.core.loading import get_model
+from ecommerce.extensions.checkout.utils import get_receipt_page_url
 from ecommerce.extensions.payment.processors.wechatpay import WechatPay
 from ecommerce.extensions.payment.views.alipay import AlipayPaymentExecutionView, AlipayPaymentResultView
 from payments.wechatpay.wxpay import OrderQuery_pub
@@ -24,28 +25,6 @@ class WechatpayPaymentExecutionView(AlipayPaymentExecutionView):
         return WechatPay(self.request.site)
 
 
-class WechatpayPaymentResultView(AlipayPaymentResultView):
-
-    @property
-    def payment_processor(self):
-        return WechatPay(self.request.site)
-
-
-class WechatpayPaymentPageView(View):
-    
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super(WechatpayPaymentPageView, self).dispatch(request, *args, **kwargs)
-
-    def post(self, request):
-        context = {
-            'code_url': request.POST.get('code_url'),
-            'basket_id': request.POST.get('basket_id'),
-            'result_page': request.POST.get('request_page'),
-        }
-        return HttpResponse(context['code_url'])
-
-
 class WechatpayOrderQuery(APIView):
 
     NOTPAY = 1
@@ -53,26 +32,31 @@ class WechatpayOrderQuery(APIView):
 
     def get(self, request, pk):
         status = self.NOTPAY
+        receipt_url = ''
         try:
             basket = Basket.objects.get(owner=request.user, id=pk)
             if basket.status == 'Submitted':
                 status = self.PAID
             else:
                 status = self.wechatpay_query(basket)
+
+            if status == self.PAID:
+                receipt_url = get_receipt_page_url(
+                    order_number=basket.order_number,
+                    site_configuration=basket.site.siteconfiguration
+                )
         except Exception, e:
             logger.exception(e)
 
         return Response({
-            'code': 0,
-            'msg': '',
-            'data': {
-                'status': status
-            },
+            'status': status,
+            'receipt_url': receipt_url,
         })
 
     @classmethod
     def wechatpay_query(cls, basket):
         '''
+        query pay result
         '''
         orderquery_pub = OrderQuery_pub()
         pay_resp = PaymentProcessorResponse.objects.get(processor_name=WechatPay.NAME, basket=basket)
