@@ -14,6 +14,9 @@
     <div id="error-message">
         <div class="container">
             <div class="depth depth-2 message-error-content">
+                <p class="ecommerce-icon-wrap">
+                    <img class="ecommerce-icon" src="/static/images/icons8-card_in_use.png" />
+                </p>
                 <h1>{% trans "Checkout Error" %}</h1>
                 <p>{% trans "An error has occurred with your payment." %} <b>{% trans "You have not been charged." %}</b></p>
                 <p>{% with "<a class='nav-link' href='https://support.edx.org/hc/en-us/articles/115000914088-Why-is-my-upgrade-payment-failing-'>"|safe as start_link %}

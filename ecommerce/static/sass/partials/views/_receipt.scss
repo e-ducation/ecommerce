@@ -44,7 +44,7 @@
 
         .error-message {
             background: inherit;
-
+            max-width: 1140px;
             .title {
                 margin-bottom: 5px;
                 font-weight: 600;
@@ -485,7 +485,10 @@
     }
 }
 
-
+.basket .container:focus {
+    /* border: none; */
+    outline: none;
+}
 
 .receipt {
     .thank-you{
@@ -643,6 +646,9 @@
     font-size: 14px;
     line-height: 22px;
     background-color: #4788c7;
+    &:hover,&:focus{
+        border-bottom: none;
+    }
 }
 .receipt .table{
     margin-bottom: 50px;
@@ -650,6 +656,8 @@
 .receipt #error-container{
     background: inherit;
     border-bottom: none;
+    padding: 0;
+    margin: 0 auto;
     padding-top: 40px;
     max-width: 1140px;
     .error-message{

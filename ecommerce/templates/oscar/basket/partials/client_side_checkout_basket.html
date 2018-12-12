@@ -7,131 +7,133 @@
 
 {% include 'partials/alert_messages.html' %}
 
-<div id="summary" class="col-sm-5">
-    <form action="." method="post" class="row">
-        {% csrf_token %}
-        {{ formset.management_form }}
+<div id="summary" class="col-sm-4">
+    <div class="summary-container">
+        <form action="." method="post" class="row">
+            {% csrf_token %}
+            {{ formset.management_form }}
 
-        <div role="region" aria-labelledby="cart-region">
-            <h2 id="cart-region" class="title">{% trans "in your cart" %}</h2>
-            <p>{% trans "Your purchase contains the following" %}:</p>
-            {% for form, line_data in formset_lines_data %}
-                {{ form.id }}
-                <div class="product row" data-sku={{line_data.sku}}>
-                    <div class="product-image col-sm-5 col-xs-5">
-                        <img class="thumbnail" src="{{ line_data.image_url|default_if_none:'' }}" alt=""/>
-                    </div>
-                    <div class="product-information col-sm-7 col-xs-7">
-                        <p class="product-name">{{ line_data.product_title }}</p>
-                        {% include 'oscar/basket/partials/seat_type.html' %}
-                    </div>
-                    {% if line_data.enrollment_code %}
-                        <div class="col-sm-12 col-xs-12 form-inline quantity-group">
-                            <label for="input-quantity-field " class="product-price-label text-muted quantity-label">{% trans 'Quantity' %}</label>
-                            <div class="checkout-quantity form-group">
-                                <div class="input-group spinner {% if form.errors %}error{% endif %}">
-                                    {% render_field form.quantity class+="quantity form-control" min=min_seat_quantity max=max_seat_quantity title="Quantity" id="input-quantity-field" %}
+            <div role="region" aria-labelledby="cart-region">
+                <h2 id="cart-region" class="title">{% trans "in your cart" %}</h2>
+                <p>{% trans "Your purchase contains the following" %}:</p>
+                {% for form, line_data in formset_lines_data %}
+                    {{ form.id }}
+                    <div class="product row" data-sku={{line_data.sku}}>
+                        <div class="product-image col-sm-5 col-xs-5">
+                            <img class="thumbnail" src="{{ line_data.image_url|default_if_none:'' }}" alt=""/>
+                        </div>
+                        <div class="product-information col-sm-7 col-xs-7">
+                            <p class="product-name">{{ line_data.product_title }}</p>
+                            {% include 'oscar/basket/partials/seat_type.html' %}
+                        </div>
+                        {% if line_data.enrollment_code %}
+                            <div class="col-sm-12 col-xs-12 form-inline quantity-group">
+                                <label for="input-quantity-field " class="product-price-label text-muted quantity-label">{% trans 'Quantity' %}</label>
+                                <div class="checkout-quantity form-group">
+                                    <div class="input-group spinner {% if form.errors %}error{% endif %}">
+                                        {% render_field form.quantity class+="quantity form-control" min=min_seat_quantity max=max_seat_quantity title="Quantity" id="input-quantity-field" %}
+                                    </div>
+                                    <button id="quantity-update" class="btn btn-primary update-button quantity-update" type="submit"
+                                            data-loading-text="{% trans 'Updating...' %}">{% trans "Update" %}</button>
                                 </div>
-                                <button id="quantity-update" class="btn btn-primary update-button quantity-update" type="submit"
-                                        data-loading-text="{% trans 'Updating...' %}">{% trans "Update" %}</button>
-                            </div>
-                            <div id="error-msg" role="alert"></div>
-                            <span class="max-quantity">Max: 100</span>
-                        </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
-    </form>
-    <div role="region" aria-labelledby="summary-region" aria-live="polite">
-        <h2 id="summary-region" class="title">{% trans "summary" %}</h2>
-        {% if is_enrollment_code_purchase %}
-            <div id="summary-header" class="row">
-                <span class="col-xs-4 col-sm-4">{% trans "Price" %}</span>
-                <span class="col-xs-4 col-sm-4">{% trans "Quantity" %}</span>
-                <span class="price col-xs-4 col-sm-4" >{% trans "Subtotal" %}</span>
-            </div>
-            <div id="line-item" class="row">
-                <span id="line-price" class="col-xs-4 col-sm-4" >{{line_price|currency:basket.currency}}</span>
-                <span id="line-quantity" class="col-xs-4 col-sm-4">{{basket.num_items}}</span>
-                <span id="line-subtotal" class="price col-xs-4 col-sm-4">{{order_total.incl_tax|currency:basket.currency}}</span>
-            </div>
-        {% else %}
-            <div id="line-price" class="amount row">
-                <span class="description col-xs-4 col-sm-4">{% trans "Price" %}</span>
-                <span class="col-xs-4 col-sm-4"></span>
-                <span class="price col-xs-4 col-sm-4">{{basket.total_incl_tax_excl_discounts|currency:basket.currency}}</span>
-            </div>
-        {% endif %}
-        {% if basket.total_discount %}
-            <div id="line-discount" class="amount row">
-                <span class="description">{% trans "Discounts applied" %}</span>
-                <span class="col-xs-4 col-sm-4"></span>
-                <span class="price col-xs-4 col-sm-4">-{{basket.total_discount|currency:basket.currency}}</span>
-            </div>
-        {% endif %}
-        <div id="offer-information" class="row">
-            {% block offers %}
-                <div class="offers">
-                    {% for offer_id, offer in basket.applied_offers.items %}
-                        {% if offer.condition.enterprise_customer_name %}
-                            <p class="offer">
-                                {% blocktrans with enterprise_customer_name=offer.condition.enterprise_customer_name benefit=offer.benefit|benefit_discount %}
-                                    {{ benefit }} discount provided by {{ enterprise_customer_name }}.
-                                {% endblocktrans %}
-                            </p>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% endblock offers %}
-        </div>
-        <div id="voucher-information" class="row">
-            {% if show_voucher_form %}
-                {% block vouchers %}
-                    {% if basket.contains_a_voucher %}
-                        <div class="vouchers">
-                            {% for voucher in basket.vouchers.all %}
-                                <p class="voucher">
-                                    {% blocktrans with voucher_code=voucher.code %}
-                                        Coupon {{ voucher_code }} applied for {{ total_benefit }} off
-                                    {% endblocktrans %}
-                                    <form action="{% url 'basket:vouchers-remove' pk=voucher.id %}" method="POST">
-                                        {% csrf_token %}
-                                        <button class="remove-voucher" type="submit" aria-label={% trans "Remove coupon" %}>Remove</button>
-                                    </form>
-                                </p>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}
-                        {% if voucher_form %}
-                            <div class="use-voucher">
-                                <label for="id_code">{% trans "Add coupon code" %} <span>{% trans "(optional)" %}</span></label>
-                                {% include 'basket/partials/add_voucher_form.html' %}
+                                <div id="error-msg" role="alert"></div>
+                                <span class="max-quantity">Max: 100</span>
                             </div>
                         {% endif %}
-                    {% endif %}
-                {% endblock vouchers %}
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+        <div role="region" aria-labelledby="summary-region" aria-live="polite">
+            <h2 id="summary-region" class="title">{% trans "summary" %}</h2>
+            {% if is_enrollment_code_purchase %}
+                <div id="summary-header" class="row">
+                    <span class="col-xs-4 col-sm-4">{% trans "Price" %}</span>
+                    <span class="col-xs-4 col-sm-4">{% trans "Quantity" %}</span>
+                    <span class="price col-xs-4 col-sm-4" >{% trans "Subtotal" %}</span>
+                </div>
+                <div id="line-item" class="row">
+                    <span id="line-price" class="col-xs-4 col-sm-4" >{{line_price|currency:basket.currency}}</span>
+                    <span id="line-quantity" class="col-xs-4 col-sm-4">{{basket.num_items}}</span>
+                    <span id="line-subtotal" class="price col-xs-4 col-sm-4">{{order_total.incl_tax|currency:basket.currency}}</span>
+                </div>
+            {% else %}
+                <div id="line-price" class="amount row">
+                    <span class="description col-xs-4 col-sm-4">{% trans "Price" %}</span>
+                    <span class="col-xs-4 col-sm-4"></span>
+                    <span class="price col-xs-4 col-sm-4">{{basket.total_incl_tax_excl_discounts|currency:basket.currency}}</span>
+                </div>
             {% endif %}
+            {% if basket.total_discount %}
+                <div id="line-discount" class="amount row">
+                    <span class="description">{% trans "Discounts applied" %}</span>
+                    <span class="col-xs-4 col-sm-4"></span>
+                    <span class="price col-xs-4 col-sm-4">-{{basket.total_discount|currency:basket.currency}}</span>
+                </div>
+            {% endif %}
+            <div id="offer-information" class="row">
+                {% block offers %}
+                    <div class="offers">
+                        {% for offer_id, offer in basket.applied_offers.items %}
+                            {% if offer.condition.enterprise_customer_name %}
+                                <p class="offer">
+                                    {% blocktrans with enterprise_customer_name=offer.condition.enterprise_customer_name benefit=offer.benefit|benefit_discount %}
+                                        {{ benefit }} discount provided by {{ enterprise_customer_name }}.
+                                    {% endblocktrans %}
+                                </p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endblock offers %}
+            </div>
+            <div id="voucher-information" class="row">
+                {% if show_voucher_form %}
+                    {% block vouchers %}
+                        {% if basket.contains_a_voucher %}
+                            <div class="vouchers">
+                                {% for voucher in basket.vouchers.all %}
+                                    <p class="voucher">
+                                        {% blocktrans with voucher_code=voucher.code %}
+                                            Coupon {{ voucher_code }} applied for {{ total_benefit }} off
+                                        {% endblocktrans %}
+                                        <form action="{% url 'basket:vouchers-remove' pk=voucher.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <button class="remove-voucher" type="submit" aria-label={% trans "Remove coupon" %}>Remove</button>
+                                        </form>
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {# Hide the entire section if a custom BasketView doesn't pass in a voucher form #}
+                            {% if voucher_form %}
+                                <div class="use-voucher">
+                                    <label for="id_code">{% trans "Add coupon code" %} <span>{% trans "(optional)" %}</span></label>
+                                    {% include 'basket/partials/add_voucher_form.html' %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endblock vouchers %}
+                {% endif %}
+            </div>
+            <div id="basket-total" class="row" aria-describedby="total-price-desc">
+                <span id="total-price-desc col-xs-4 col-sm-4" class="description">{% trans "TOTAL" %}</span>
+                <span class="col-xs-4 col-sm-4"></span>
+                <span class="price col-xs-4 col-sm-4">{{ order_total.incl_tax|currency:basket.currency }}</span>
+            </div>
         </div>
-        <div id="basket-total" class="row" aria-describedby="total-price-desc">
-            <span id="total-price-desc col-xs-4 col-sm-4" class="description">{% trans "TOTAL" %}</span>
-            <span class="col-xs-4 col-sm-4"></span>
-            <span class="price col-xs-4 col-sm-4">{{ order_total.incl_tax|currency:basket.currency }}</span>
-        </div>
+        {% if order_details_msg %}
+            <div role="region" aria-labelledby="order-details-region">
+                <h2 id="order-details-region" class="title">{% trans "order details" %}</h2>
+                <p>{{ order_details_msg | safe}}</p>
+            </div>
+        {% endif %}
     </div>
-    {% if order_details_msg %}
-        <div role="region" aria-labelledby="order-details-region">
-            <h2 id="order-details-region" class="title">{% trans "order details" %}</h2>
-            <p>{{ order_details_msg | safe}}</p>
-        </div>
-    {% endif %}
 </div>
 
 <form id="paymentForm" class="payment-form form-horizontal" method="post" aria-live="polite">
     {% csrf_token %}
 
-    <div id="payment-information" class="col-sm-7">
+    <div id="payment-information" class="col-sm-8">
         {% if not free_basket %}
         <div id="payment-method-information" class="placeholder row">
             <div role="region" aria-labelledby="payment-method-region">
@@ -164,15 +166,16 @@
                               title="{% trans "Pay with Apple Pay" %}" type="button">
                       </button>
                       {% if wechatpay_enabled %}
-                      <button data-track-type="click"
-                              data-track-event="edx.bi.ecommerce.basket.payment_selected"
-                              data-track-category="checkout"
-                              class="btn payment-button payment-processor-wechatpay"
-                              value="WechatPay"
-                              title="{% trans "Wechat Pay" %}"
-                              type="button">
-                      </button>
-                      <img src="data:image/png;base64,{{wechatpay_code_url}}" width="500px" />
+                      <div class="wxbtn-container">
+                          <button data-track-type="click"
+                                  data-track-event="edx.bi.ecommerce.basket.payment_selected"
+                                  data-track-category="checkout"
+                                  class="btn payment-button payment-processor-wechatpay"
+                                  value="WechatPay"
+                                  title="{% trans "Wechat Pay" %}"
+                                  type="button">
+                          </button>
+                      </div>
                       {% endif %}
                       {% if alipay_enabled %}
                       <button data-track-type="click"
@@ -194,6 +197,17 @@
                       <!-- A Stripe Element will be inserted here. -->
                     </div>
                   </div>
+                  {% if wechatpay_enabled %}
+                    <div id="paying" class="wxpay-content" >
+                        <div class="wxpay-number">实付金额：{{ order_total.incl_tax|currency:basket.currency }}</div>
+                        <div>请在2小时内完成支付，否则可能导致购买失败</div>
+                        <div class="wxpay-scanner">
+                            <img src="data:image/png;base64,{{wechatpay_code_url}}" width="500px" />
+                        </div>
+                        <div>请使用微信扫描二维码</div>
+                        <div style="margin-top:5px">以完成支付</div>
+                    </div>
+                  {% endif %}
             </div>
         </div>
         {% if cybersource_enabled %}
@@ -269,9 +283,10 @@
                 {% endif %}
                 {% endif %}
 
-                <div class="payment-button col-sm-6 col-sm-offset-6 col-xs-12">
+                <div class="payment-button">
                 {% if free_basket %}
                     <a href="{% url 'checkout:free-checkout' %}"
+                       id= "free-btn"
                        data-track-type="click"
                        data-track-event="edx.bi.ecommerce.basket.free_checkout"
                        data-track-category="checkout"
@@ -296,3 +311,31 @@
         </div>
     </div>
 </form>
+
+<input id="basket-id" value="{{basket.id}}" type="hidden"/>
+<script type="text/javascript">
+window.onload = function(){
+    var id = document.getElementById('basket-id').value;
+    var flag = true;
+    var checkStatus = function (){
+        if (flag){
+            $.ajax({
+                url: '/payment/wechatpay/order_query/' + id,
+                success: function(data){
+                    console.log('success', data)
+                    if(data.status == 2){
+                        clearInterval(timer);
+                        flag = false;
+                        var url = data.receipt_url;
+                        window.location.href = url;
+                    }
+                },
+                error: function(err){
+                    console.log('error', err)
+                },
+            });
+        }
+    }
+    var timer = setInterval(checkStatus, 1000);
+}
+</script>

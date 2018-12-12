@@ -27,6 +27,9 @@
        data-currency="{{ order.currency }}"
        data-order-id="{{ order.number }}"
        data-total-amount="{{ order.total_incl_tax | unlocalize }}">
+      <p class="ecommerce-icon-wrap">
+        <img class="ecommerce-icon" src="/static/images/icons8-card_in_use.png" />
+      </p>
       <h2 class="thank-you">{% trans "Thank you for your order!" %}</h2>
 
       <div class="list-info">
