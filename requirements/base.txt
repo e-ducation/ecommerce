@@ -5,6 +5,7 @@
 #    make upgrade
 #
 -e git+https://github.com/edx/analytics-python.git@1.2.11#egg=analytics-python==1.2.11
+alipay-sdk-python==3.2.53 # via alipay
 amqp==1.4.9               # via kombu
 anyjson==0.3.3            # via kombu
 appdirs==1.4.3            # via zeep
