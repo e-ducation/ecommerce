@@ -9,6 +9,7 @@ import yaml
 from django.core.exceptions import ImproperlyConfigured
 
 from ecommerce.settings.base import *
+from ecommerce.settings.eliteu import *
 
 # Protocol used for construcing absolute callback URLs
 PROTOCOL = 'https'
