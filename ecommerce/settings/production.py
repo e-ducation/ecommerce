@@ -64,9 +64,8 @@ with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
     vars().update(config_from_yaml)
 
 if ENABLE_ALIPAY_WECHATPAY:
-    ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['alipay']
-    ALIPAY_APP_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['alipay']
-    WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG['edx']['wechatpay']
+    ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG.get('edx', {}).get('alipay', ALIPAY_INFO)
+    WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG.get('edx', {}).get('wechatpay', WECHAT_PAY_INFO)
     PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS)
     PAYMENT_PROCESSORS.extend([
         'ecommerce.extensions.payment.processors.alipay.AliPay',
