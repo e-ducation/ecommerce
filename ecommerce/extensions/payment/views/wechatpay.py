@@ -13,6 +13,7 @@ from ecommerce.extensions.payment.views.alipay import AlipayPaymentExecutionView
 from payments.wechatpay.wxpay import OrderQuery_pub
 
 Basket = get_model('basket', 'Basket')
+Order = get_model('order', 'Order')
 PaymentProcessorResponse = get_model('payment', 'PaymentProcessorResponse')
 
 logger = logging.getLogger(__name__)
@@ -28,7 +29,8 @@ class WechatpayPaymentExecutionView(AlipayPaymentExecutionView):
 class WechatpayOrderQuery(APIView):
 
     NOTPAY = 1
-    PAID = 2
+    SUCCESS = 2
+    PAID = 3
 
     def get(self, request, pk):
         status = self.NOTPAY
@@ -40,11 +42,12 @@ class WechatpayOrderQuery(APIView):
             else:
                 status = self.wechatpay_query(basket)
 
-            if status == self.PAID:
+            if status == self.PAID and Order.objects.filter(number=basket.order_number):
                 receipt_url = get_receipt_page_url(
                     order_number=basket.order_number,
                     site_configuration=basket.site.siteconfiguration
                 )
+                status = self.SUCCESS
         except Exception, e:
             logger.exception(e)
 
