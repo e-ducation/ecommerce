@@ -8,6 +8,7 @@ from oscar.core.loading import get_model
 from ecommerce.core.url_utils import get_ecommerce_url
 from ecommerce.extensions.payment.processors import BasePaymentProcessor, HandledProcessorResponse
 from ecommerce.extensions.payment.utils import create_trade_id, str_to_specify_digits
+from ecommerce.courses.utils import get_course_info_from_catalog
 from payments.alipay.alipay import create_direct_pay_by_user
 
 PaymentProcessorResponse = get_model('payment', 'PaymentProcessorResponse')
@@ -36,8 +37,8 @@ class AliPay(BasePaymentProcessor):
         approval_url
         """
         trade_id = create_trade_id(basket.id)
-        body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
-        subject = "BUY COURSE"
+        course_data = get_course_info_from_catalog(request.site, basket.all_lines()[0].product)
+        subject = body = course_data.get('title') or 'buy course'
         total_fee = str_to_specify_digits(str(basket.total_incl_tax))
         http_host = request.META.get('HTTP_HOST')
         extra_common_param = urljoin(get_ecommerce_url(), reverse('alipay:execute'))

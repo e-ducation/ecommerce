@@ -12,6 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from ecommerce.core.url_utils import get_ecommerce_url
 from ecommerce.extensions.payment.processors import BasePaymentProcessor, HandledProcessorResponse
 from ecommerce.extensions.payment.utils import create_trade_id
+from ecommerce.courses.utils import get_course_info_from_catalog
 from payments.wechatpay.wxpay import WxPayConf_pub, UnifiedOrder_pub
 from oscar.core.loading import get_model, get_class
 
@@ -55,7 +56,8 @@ class WechatPay(BasePaymentProcessor):
                 return {}
 
             out_trade_no = create_trade_id(basket.id)
-            body = "BUY {amount} {currency}".format(amount=basket.total_incl_tax, currency=basket.currency)
+            course_data = get_course_info_from_catalog(request.site, basket.all_lines()[0].product)
+            body = course_data.get('title') or 'buy course'
             order_price = basket.total_incl_tax
             total_fee = int(order_price * 100)
             attach_data = urljoin(get_ecommerce_url(), reverse('wechatpay:execute'))
