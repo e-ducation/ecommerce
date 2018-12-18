@@ -313,12 +313,21 @@
 </form>
 
 <input id="basket-id" value="{{basket.id}}" type="hidden"/>
+<input id="is-free" value="{{free_basket}}" type="hidden" />
 <script type="text/javascript">
 window.onload = function(){
+    var isFree = document.getElementById('is-free').value;
     var id = document.getElementById('basket-id').value;
+    if (isFree == 'True'){
+        console.log('is-free',isFree)
+        return;
+    }
     var flag = true;
+    var count = 0;
+    var MAX_COUNT = 200;
     var checkStatus = function (){
-        if (flag){
+        if (flag && count < MAX_COUNT){
+            count ++;
             $.ajax({
                 url: '/payment/wechatpay/order_query/' + id,
                 success: function(data){
@@ -336,6 +345,7 @@ window.onload = function(){
             });
         }
     }
-    var timer = setInterval(checkStatus, 1000);
+
+    var timer = setInterval(checkStatus, 3000);
 }
 </script>
