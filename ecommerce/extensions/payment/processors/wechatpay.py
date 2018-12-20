@@ -56,7 +56,8 @@ class WechatPay(BasePaymentProcessor):
                 return {}
 
             out_trade_no = create_trade_id(basket.id)
-            course_data = get_course_info_from_catalog(request.site, basket.all_lines()[0].product)
+            # course_data = get_course_info_from_catalog(request.site, basket.all_lines()[0].product)
+            course_data = {}
             body = course_data.get('title') or 'buy course'
             order_price = basket.total_incl_tax
             total_fee = int(order_price * 100)

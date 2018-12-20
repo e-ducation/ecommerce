@@ -37,7 +37,8 @@ class AliPay(BasePaymentProcessor):
         approval_url
         """
         trade_id = create_trade_id(basket.id)
-        course_data = get_course_info_from_catalog(request.site, basket.all_lines()[0].product)
+        # course_data = get_course_info_from_catalog(request.site, basket.all_lines()[0].product)
+        course_data = {}
         subject = body = course_data.get('title') or 'buy course'
         total_fee = str_to_specify_digits(str(basket.total_incl_tax))
         http_host = request.META.get('HTTP_HOST')
