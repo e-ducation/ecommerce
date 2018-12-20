@@ -684,3 +684,32 @@
         }
     }
 }
+
+
+@media screen and (max-width:568px){
+    .basket-client-side .container #summary{
+        padding: 0;
+    }
+    #payment-processor{
+        text-align: center;
+    }
+    .basket-client-side #payment-processor .payment-button.payment-processor-alipay{
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    .receipt #cta-nav-links .dashboard-link{
+        margin-left: 0;
+    }
+    .receipt .table .order-total{
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 375px){
+    .receipt #cta-nav-links .nav-link{
+        padding: 5px 6px;
+    }
+    .receipt #cta-nav-links .dashboard-link{
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
