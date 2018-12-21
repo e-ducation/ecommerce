@@ -1,4 +1,6 @@
+import json
 import logging
+
 from django.db import transaction
 from django.shortcuts import redirect
 from django.views.generic import View
@@ -12,6 +14,7 @@ from ecommerce.extensions.checkout.mixins import EdxOrderPlacementMixin
 from ecommerce.extensions.payment.processors.alipay import AliPay
 from ecommerce.extensions.checkout.utils import get_receipt_page_url
 from ecommerce.extensions.basket.utils import basket_add_organization_attribute
+from payments.alipay.alipay import notify_verify
 
 logger = logging.getLogger(__name__)
 Applicator = get_class('offer.applicator', 'Applicator')
@@ -54,13 +57,23 @@ class AlipayPaymentExecutionView(EdxOrderPlacementMixin, APIView):
             logger.exception(e)
             return None
 
+    def verify_data(self, data):
+        """ verify request """
+        try:
+            return notify_verify(data), data
+        except Exception, e:
+            logger.exception(e)
+        return False, {}
+
     def post(self, request):
-        """Handle an incoming user returned to us by PayPal after approving payment."""
-        payment_id = request.POST.get('out_trade_no')
+        """Handle an incoming user returned to us by Alipay after approving payment."""
+        resp = json.loads(request.POST['original_data'])['data']
+        verify_ret, payment_response = self.verify_data(resp)
+        if not verify_ret:
+            return Response({'result': 'fail'})
 
-        payment_response = request.POST.dict()
+        payment_id = payment_response.get('out_trade_no')
         basket = self._get_basket(payment_id)
-
         if not basket:
             return Response({'result': 'fail'})
 
@@ -86,7 +99,6 @@ class AlipayPaymentExecutionView(EdxOrderPlacementMixin, APIView):
             shipping_method = NoShippingRequired()
             shipping_charge = shipping_method.calculate(basket)
             order_total = OrderTotalCalculator().calculate(basket, shipping_charge)
-
             user = basket.owner
             # Given a basket, order number generation is idempotent. Although we've already
             # generated this order number once before, it's faster to generate it again
