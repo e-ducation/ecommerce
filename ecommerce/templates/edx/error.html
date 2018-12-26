@@ -13,7 +13,7 @@
         <div class="container">
             <div class="depth depth-2 message-error-content">
                 <h3>{{ error }}</h3>
-                {% trans "If you need assistance, <a href=https://www.elitemba.cn/contact>contact us</a>." %}
+                {% blocktrans %}If you need assistance, <a href={{lms_contact_url}}>contact us</a>.{% endblocktrans %}
             </div>
         </div>
     </div>

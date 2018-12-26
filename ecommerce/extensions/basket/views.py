@@ -113,7 +113,7 @@ class BasketAddItemsView(View):
         try:
             prepare_basket(request, available_products, voucher)
         except AlreadyPlacedOrderException:
-            return render(request, 'edx/error.html', {'error': _('You have already purchased these products')})
+            return render(request, 'edx/error.html', {'error': _('You have already purchased these products'), 'lms_contact_url': get_lms_url('/contact')})
         url = add_utm_params_to_url(reverse('basket:summary'), self.request.GET.items())
         return HttpResponseRedirect(url, status=303)
 
