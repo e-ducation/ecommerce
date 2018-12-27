@@ -783,26 +783,34 @@
     border-bottom: solid 1px #b6dcfe;
     margin-bottom: 20px;
 }
+.basket-client-side .container #summary #voucher-information .use-voucher{
+    width: 100%;
+}
 .basket-client-side .container #summary #voucher-information .use-voucher label{
     color: #2e313c;
     font-size: 16px;
     font-weight: 600;
 }
 .basket-client-side .container #summary #voucher-information .use-voucher #id_code{
-    width: 212px;
+    // width: 212px;
+    width: 70%;
     border: 1px solid #99b5d1;
     display: block;
     float: left;
     border-radius: 0;
     height: 34px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
 }
 .basket #apply-voucher-button{
     background: #4788c7;
     color: white;
     border-radius: 0;
-    width: 84px;
+    width: 30%;
     height: 34px;
     line-height: 16px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 .basket.basket-client-side:focus{
     border: none;
@@ -935,3 +943,4 @@
     left: 50%;
     margin-left: -54px;
 }
+

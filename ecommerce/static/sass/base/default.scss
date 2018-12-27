@@ -3,16 +3,85 @@
 $brand-logo-width: 72px !default;
 $brand-logo-height: 48px !default;
 $scaled-height: 39px !default;
-
 // utilities
 @import "utilities/mixins";
-
 // overrides
 // --------------------
 .navbar-brand {
-    margin: 0 0 0 -15px;
+  margin: 0 0 0 -15px;
+  .navbar-brand-logo {
+    @include brand-logo($brand-logo-width, $brand-logo-height, $scaled-height);
+    width: auto;
+  }
+}
 
-    .navbar-brand-logo {
-        @include brand-logo($brand-logo-width, $brand-logo-height, $scaled-height);
+.navbar {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+  border-bottom: unset;
+}
+
+.navbar{
+  .btn-group >.btn {
+    border: none;
+    background: #fff;
+    &:hover {
+      color: #434242;
+      background: #fff;
     }
+  }
+  .btn-group>.btn+.dropdown-toggle {
+    &:hover,
+    &:focus,
+    &:visited {
+      color: #434242;
+      background: #fff;
+    }
+  }
+}
+
+@media screen and (max-width:768px) {
+    .navbar-header{
+        position: relative;
+    }
+  .navbar {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+    min-height: 34px;
+    border-bottom: unset;
+  }
+  .navbar .container .navbar-brand {
+    padding: 13px 15px;
+    height: auto;
+    line-height: unset;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    .navbar-brand-logo {
+      width: auto;
+      transform: unset;
+      display: inline-block;
+      height: 34px;
+      margin: 0;
+    }
+  }
+  .navbar-default .navbar-toggle{
+    position: absolute;
+    background: #fff;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    border: none;
+    left: 5%;
+    padding: 0;
+    &:hover,&:focus,&:visited{
+        background: #fff;
+    }
+  }
+  .navbar-default .navbar-toggle .icon-bar{
+    margin-top: 7px;
+    background-color: #767676;
+    width: 30px;
+  }
+  .navbar-nav{
+      margin: 0 -15px;
+  }
 }
