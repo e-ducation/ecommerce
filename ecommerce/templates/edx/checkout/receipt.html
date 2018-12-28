@@ -73,7 +73,7 @@
             </div>
             <div>
               <span class="order-summary-label">{% trans "Order Date:" %}</span>
-              <span class="order-summary-value">{{ order.date_placed|date:"E d, Y" }}</span>
+              <span class="order-summary-value">{{ order.date_placed|date:"SHORT_DATE_FORMAT" }}</span>
             </div>
           </div>
         </div>
