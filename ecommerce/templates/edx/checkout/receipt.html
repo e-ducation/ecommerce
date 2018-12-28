@@ -69,7 +69,7 @@
             </div>
             <div>
               <span class="order-summary-label">{% trans "Payment Method:" %}</span>
-              <span class="order-summary-value">{{ payment_method }}</span>
+              <span class="order-summary-value">{% if payment_method %}{% blocktrans %}{{ payment_method }}{% endblocktrans %}{% else %}{% trans "Coupons" %}{% endif %}</span>
             </div>
             <div>
               <span class="order-summary-label">{% trans "Order Date:" %}</span>
