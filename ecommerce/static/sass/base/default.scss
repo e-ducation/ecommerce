@@ -29,6 +29,14 @@ $scaled-height: 39px !default;
       background: #fff;
     }
   }
+  .btn-group>.btn{
+    &:hover,
+    &:focus,
+    &:visited {
+      color: #434242;
+      background: #fff;
+    }
+  }
   .btn-group>.btn+.dropdown-toggle {
     &:hover,
     &:focus,
