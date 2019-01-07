@@ -78,6 +78,7 @@ class AlipayPaymentExecutionView(EdxOrderPlacementMixin, APIView):
             return Response({'result': 'fail'})
 
         try:
+            request.user = basket.owner
             with transaction.atomic():
                 try:
                     self.handle_payment(payment_response, basket)

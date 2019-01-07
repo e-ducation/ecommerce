@@ -19,7 +19,7 @@ COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
 
 # Email configuration
-EMAIL_BACKEND = 'django_ses.SESBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Minify CSS
 COMPRESS_CSS_FILTERS += [
