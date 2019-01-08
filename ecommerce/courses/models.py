@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db import models, transaction
 from django.db.models import Count, Q
 from django.utils.timezone import now, timedelta
+from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 from oscar.core.loading import get_class, get_model
 
@@ -123,13 +124,16 @@ class Course(models.Model):
 
     def get_course_seat_name(self, certificate_type, id_verification_required):
         """ Returns the name for a course seat. """
-        name = u'Seat in {}'.format(self.name)
+        # name = u'Seat in {}'.format(self.name)
+        name = ugettext(u'Seat in {}'.format(self.name))
 
         if certificate_type != '':
-            name += u' with {} certificate'.format(certificate_type)
+            # name += u' with {} certificate'.format(certificate_type)
+            name += ugettext(u' with {} certificate'.format(certificate_type))
 
             if id_verification_required:
-                name += u' (and ID verification)'
+                # name += u' (and ID verification)'
+                name += ugettext(u' (and ID verification)')
 
         return name
 
