@@ -79,6 +79,10 @@ class FreeCheckoutView(EdxOrderPlacementMixin, RedirectView):
                 )
 
             order = self.place_free_order(basket)
+            try:
+                self.send_confirmation_message(order, self.communication_type_code)
+            except Exception:
+                pass
 
             if has_enterprise_offer(basket):
                 # Skip the receipt page and redirect to the LMS

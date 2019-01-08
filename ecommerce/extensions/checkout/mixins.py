@@ -183,11 +183,6 @@ class EdxOrderPlacementMixin(OrderPlacementMixin):
         else:
             post_checkout.send(sender=self, order=order, request=request, email_opt_in=email_opt_in)
 
-        try:
-            self.send_confirmation_message(order, self.communication_type_code)
-        except Exception, e:
-            logger.exception(e)
-
         return order
 
     def place_free_order(self, basket, request=None):
