@@ -21,12 +21,12 @@ $scaled-height: 39px !default;
   padding-top: 17px;
   .navbar-brand-logo {
     top: unset;
-    transform: unset;
+    transform: translateY(0);
   }
 }
 .navbar {
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
-  border-bottom: unset;
+  border-bottom: none;
 }
 
 .navbar{
@@ -74,7 +74,7 @@ $scaled-height: 39px !default;
     margin: 0;
     .navbar-brand-logo {
       width: auto;
-      transform: unset;
+      transform: translateY(0);
       display: inline-block;
       height: 34px;
       margin: 0;
