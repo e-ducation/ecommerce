@@ -5,6 +5,7 @@
 # 
 # Translators:
 # li ying <code@eliteu.cn>, 2019
+# 家璧 刘 <jb.liu@eliteu.com.cn>, 2019
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-29 12:55+0000\n"
 "PO-Revision-Date: 2019-01-04 04:30+0000\n"
-"Last-Translator: li ying <code@eliteu.cn>, 2019\n"
+"Last-Translator: 家璧 刘 <jb.liu@eliteu.com.cn>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/e-ducation/teams/93939/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,7 +53,7 @@ msgstr "Email域名 {%s}无效。"
 
 #: static/js/models/coupon_model.js:114
 msgid "Enterprise Customer must be set if Enterprise Customer Catalog is set"
-msgstr ""
+msgstr "如已设置企业顾客目录，那么对企业顾客也必须进行设置。"
 
 #: static/js/models/coupon_model.js:132
 msgid "Must occur after start date"
@@ -249,7 +250,7 @@ msgstr "兑换"
 msgid ""
 "Caution! Using the back button on this page may cause you to be charged "
 "again."
-msgstr "请注意！使用这个页面上的返回按钮可能会导致你被重复收费。"
+msgstr "请注意！使用这个页面上的返回按钮可能会导致您被重复收费。"
 
 #. Translators: Do not translate "Apple Pay".
 #: static/js/payment_processors/cybersource.js:218

@@ -757,7 +757,7 @@ msgstr "完成订单后，您将收到课程学分。"
 msgid ""
 "After you complete your order you will be automatically enrolled in the "
 "course."
-msgstr "完成订单后，您将自动在此课程中进行选课。"
+msgstr "完成订单后，您会自动报名此课程。"
 
 #: extensions/basket/views.py
 #, python-brace-format
@@ -1633,7 +1633,7 @@ msgstr "版权 © %(year)s %(platform_name)s。保留所有权利。"
 #: templates/customer/emails/commtype_course_purchased_body.txt
 #, python-format
 msgid "Hi %(full_name)s,"
-msgstr "%(full_name)s 你好,"
+msgstr "%(full_name)s 您好,"
 
 #: templates/customer/emails/commtype_course_purchased_body.html
 #: templates/customer/emails/commtype_course_purchased_body.txt
@@ -1643,7 +1643,7 @@ msgid ""
 "your next credit or debit card statement with a company name of "
 "%(platform_name)s."
 msgstr ""
-"感谢你购买 %(course_title)s。以下费用将以公司名称为 %(platform_name)s 显示在您的下一次信用卡或借记卡账单中。"
+"感谢您购买 %(course_title)s。以下费用将以公司名称为 %(platform_name)s 显示在您的下一次信用卡或借记卡账单中。"
 
 #: templates/customer/emails/commtype_course_purchased_body.html
 #: templates/customer/emails/commtype_course_purchased_body.txt
@@ -1651,7 +1651,7 @@ msgstr ""
 msgid ""
 "You can access your course and complete your verification (if required) on "
 "your %(platform_name)s dashboard. "
-msgstr "你可以访问你的课程并在你的 %(platform_name)s 仪表板上完成认证（如要求）。"
+msgstr "您可以访问您的课程并在您的 %(platform_name)s 仪表板上完成认证（如要求）。"
 
 #: templates/customer/emails/commtype_course_purchased_body.html
 #: templates/customer/emails/commtype_course_purchased_body.txt
@@ -1676,7 +1676,7 @@ msgstr "%(platform_name)s团队"
 msgid ""
 "You are receiving this email because you purchased a seat in the "
 "%(platform_name)s course %(course_title)s."
-msgstr "你收到此电子邮件是因为你在 %(platform_name)s 的课程 %(course_title)s中购买了一个座席。"
+msgstr "您收到此电子邮件是因为您在 %(platform_name)s 的课程 %(course_title)s中购买了一个座席。"
 
 #: templates/customer/emails/commtype_course_purchased_body.txt
 msgid "Receipt Confirmation for: "
@@ -1764,7 +1764,7 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                            您收到此信息是因为你购买了 %(platform_name)s 课程 %(course_title)s 的学分时。"
+"                            您收到此信息是因为您购买了 %(platform_name)s 课程 %(course_title)s 的学分时。"
 
 #: templates/customer/emails/commtype_credit_receipt_body.txt
 msgid "Payment confirmation for: "
@@ -2138,9 +2138,9 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"                        恭喜你！你有资格购买此课程的学术课程学分。\n"
-"你必须在 %(date)s 之前购买你的学分。\n"
-"选择以下其中一个机构来购买你的学分。"
+"                        恭喜您！您有资格购买此课程的学术课程学分。\n"
+"您必须在 %(date)s 之前购买您的学分。\n"
+"选择以下其中一个机构来购买您的学分。"
 
 #: templates/edx/credit/checkout.html
 msgid "Price:"
@@ -2157,7 +2157,7 @@ msgstr "总共:"
 
 #: templates/edx/credit/checkout.html
 msgid "You deserve it."
-msgstr "这是你应得的。"
+msgstr "这是您应得的。"
 
 #: templates/edx/credit/checkout.html
 msgid ""
