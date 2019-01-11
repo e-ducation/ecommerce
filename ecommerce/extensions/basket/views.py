@@ -12,6 +12,7 @@ from django.conf import settings
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.html import escape
+from django.contrib.auth import logout
 from django.utils.translation import ugettext as _
 from opaque_keys.edx.keys import CourseKey
 from oscar.apps.basket.views import VoucherAddView as BaseVoucherAddView
@@ -60,6 +61,14 @@ class BasketAddItemsView(View):
     """
 
     def get(self, request):
+        # lms/ecommerce has different user
+        username = request.GET.get('username')
+        if username and request.user.username != username:
+            logout(request)
+            redirect_url = '{path}?{query_string}'.format(path=request.path,
+                                                          query_string=request.META.get('QUERY_STRING'))
+            return redirect(redirect_url)
+
         partner = get_partner_for_site(request)
 
         skus = [escape(sku) for sku in request.GET.getlist('sku')]
