@@ -98,7 +98,7 @@
                                         {% endblocktrans %}
                                         <form action="{% url 'basket:vouchers-remove' pk=voucher.id %}" method="POST">
                                             {% csrf_token %}
-                                            <button class="remove-voucher" type="submit" aria-label={% trans "Remove coupon" %}>Remove</button>
+                                            <button class="remove-voucher" type="submit" aria-label={% trans "Remove coupon" %}>{% trans "Remove" context "Remove coupon" %}</button>
                                         </form>
                                     </p>
                                 {% endfor %}

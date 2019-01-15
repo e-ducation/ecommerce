@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# li ying <code@eliteu.cn>, 2019
 # 家璧 刘 <jb.liu@eliteu.com.cn>, 2019
+# li ying <code@eliteu.cn>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-08 10:10+0000\n"
+"POT-Creation-Date: 2019-01-15 11:01+0000\n"
 "PO-Revision-Date: 2019-01-04 04:29+0000\n"
-"Last-Translator: 家璧 刘 <jb.liu@eliteu.com.cn>, 2019\n"
+"Last-Translator: li ying <code@eliteu.cn>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/e-ducation/teams/93939/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -378,7 +378,7 @@ msgid ""
 "complete. If you need additional assistance, please contact the {site_name} "
 "Support Team."
 msgstr ""
-"学分当前不适用于“{course_name}”。如果您当前报读了该课程，请在所有分级完成之后再次尝试。如需其它帮助，请联系 {site_name} "
+"学分当前不适用于“{course_name}”。如果您当前报读了该课程，请在所有分级完成之后再次尝试。如需其他帮助，请联系 {site_name} "
 "支持团队。 "
 
 #: credit/views.py
@@ -2355,6 +2355,11 @@ msgstr ""
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
 msgid "Remove coupon"
 msgstr "移除优惠券"
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgctxt "Remove coupon"
+msgid "Remove"
+msgstr "移除"
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
 msgid "Add coupon code"
