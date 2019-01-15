@@ -24,7 +24,7 @@
                         </div>
                         <div class="product-information col-sm-7 col-xs-7">
                             <p class="product-name">{{ line_data.product_title }}</p>
-                            {% include 'oscar/basket/partials/seat_type.html' %}
+                            <p class="product-id">EliteU - {{ line_data.product_course_id}}</p>
                         </div>
                         {% if line_data.enrollment_code %}
                             <div class="col-sm-12 col-xs-12 form-inline quantity-group">

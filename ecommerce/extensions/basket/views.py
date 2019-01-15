@@ -311,12 +311,14 @@ class BasketSummaryView(BasketView):
             else:
                 benefit_value = None
 
+            product_course_id = line.product.course_id.split('+')
             line_data.update({
                 'sku': line.product.stockrecords.first().partner_sku,
                 'benefit_value': benefit_value,
                 'enrollment_code': line.product.is_enrollment_code_product,
                 'line': line,
                 'seat_type': self._determine_product_type(line.product),
+                'product_course_id': product_course_id[1] if len(product_course_id) > 1 else '',
             })
             lines_data.append(line_data)
 
