@@ -20,7 +20,7 @@ $scaled-height: 39px !default;
   padding: 0;
   padding-top: 17px;
   .navbar-brand-logo {
-    top: unset;
+    top: 0;
     transform: translateY(0);
   }
 }
