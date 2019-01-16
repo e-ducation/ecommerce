@@ -62,11 +62,13 @@ class BasketAddItemsView(View):
 
     def get(self, request):
         # lms/ecommerce has different user
-        username = request.GET.get('username')
-        if username and request.user.username != username:
+        if 'username' in request.GET and request.user.username != request.GET.get('username'):
             logout(request)
+            query_dict = request.GET.dict()
+            query_dict.pop('username')
             redirect_url = '{path}?{query_string}'.format(path=request.path,
-                                                          query_string=request.META.get('QUERY_STRING'))
+                                                          query_string=urlencode(query_dict))
+            logger.info('logout user {username}'.format(username=request.GET.get('username')))
             return redirect(redirect_url)
 
         partner = get_partner_for_site(request)
