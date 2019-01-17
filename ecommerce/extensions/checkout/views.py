@@ -3,9 +3,11 @@ from __future__ import unicode_literals
 
 from decimal import Decimal
 
+from urllib import urlencode
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.http import Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, TemplateView
@@ -175,6 +177,13 @@ class ReceiptResponseView(ThankYouView):
 
     def get(self, request, *args, **kwargs):
         try:
+            if 'username' in request.GET and request.user.username != request.GET['username']:
+                logout(request)
+                query_dict = request.GET.dict()
+                query_dict.pop('username')
+                return redirect('{path}?{query_string}'.format(path=request.path,
+                                                               query_string=urlencode(query_dict)))
+
             return super(ReceiptResponseView, self).get(request, *args, **kwargs)
         except Http404:
             self.template_name = 'edx/checkout/receipt_not_found.html'
