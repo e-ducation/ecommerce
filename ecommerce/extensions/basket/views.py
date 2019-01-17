@@ -20,6 +20,7 @@ from oscar.apps.basket.views import VoucherRemoveView as BaseVoucherRemoveView
 from oscar.apps.basket.views import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from requests.exceptions import ConnectionError, Timeout
 from slumber.exceptions import SlumberBaseException
+from edx_rest_api_client.client import EdxRestApiClient
 
 from ecommerce.core.exceptions import SiteConfigurationError
 from ecommerce.core.url_utils import get_lms_course_about_url, get_lms_url
@@ -82,6 +83,16 @@ class BasketAddItemsView(View):
         products = Product.objects.filter(stockrecords__partner=partner, stockrecords__partner_sku__in=skus)
         if not products:
             return HttpResponseBadRequest(_('Products with SKU(s) [{skus}] do not exist.').format(skus=', '.join(skus)))
+
+        try:
+            lms_api = EdxRestApiClient(get_lms_url('/api/v1/vip/'), oauth_access_token=request.user.access_token,
+                                       append_slash=False)
+            # user is vip, redirect lms course about
+            if lms_api.info().get().get('data', {}).get('status') is True:
+                course_key = CourseKey.from_string(products[0].attr.course_key)
+                return redirect(get_lms_course_about_url(course_key=course_key))
+        except Exception, e:
+            logger.exception(e)
 
         logger.info('Starting payment flow for user[%s] for products[%s].', request.user.username, skus)
 
