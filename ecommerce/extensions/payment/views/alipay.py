@@ -2,14 +2,18 @@ import json
 import logging
 
 from django.db import transaction
+from django.conf import settings
+from django.utils import translation
 from django.shortcuts import redirect
 from django.views.generic import View
 from django.core.exceptions import MultipleObjectsReturned
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from edx_rest_api_client.client import EdxRestApiClient
 from oscar.core.loading import get_model, get_class
 from oscar.apps.partner import strategy
 from oscar.apps.payment.exceptions import PaymentError
+from ecommerce.core.url_utils import get_lms_url
 from ecommerce.extensions.checkout.mixins import EdxOrderPlacementMixin
 from ecommerce.extensions.payment.processors.alipay import AliPay
 from ecommerce.extensions.checkout.utils import get_receipt_page_url
@@ -76,6 +80,15 @@ class AlipayPaymentExecutionView(EdxOrderPlacementMixin, APIView):
         basket = self._get_basket(payment_id)
         if not basket:
             return Response({'result': 'fail'})
+
+        try:
+            lms_api = EdxRestApiClient(get_lms_url('/api/user/v1/'),
+                                       oauth_access_token=basket.owner.access_token,
+                                       append_slash=False)
+            user_lang = lms_api.preferences(basket.owner.username).get()
+            translation.activate(user_lang.get('pref-lang', settings.LANGUAGE_CODE))
+        except Exception, e:
+            logger.exception(e)
 
         try:
             request.user = basket.owner
