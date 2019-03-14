@@ -1,4 +1,5 @@
-{% load currency_filters i18n %}
+{% load i18n %}
+{% load currency_filters %}
 
 <p>{% blocktrans with order_number=order.number %}You have successfully completed the payment for the order {{order_number}}. The payment details are as follows:{% endblocktrans %}</p>
 
