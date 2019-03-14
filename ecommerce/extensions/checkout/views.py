@@ -82,7 +82,7 @@ class FreeCheckoutView(EdxOrderPlacementMixin, RedirectView):
 
             order = self.place_free_order(basket)
             try:
-                self.send_confirmation_message(order, self.communication_type_code)
+                self.send_receipt_email(order, request.user, site)
             except Exception:
                 pass
 

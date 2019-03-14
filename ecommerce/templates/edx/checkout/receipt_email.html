@@ -1,0 +1,16 @@
+{% load currency_filters i18n %}
+
+<p>{% blocktrans with order_number=order.number %}You have successfully completed the payment for the order {{order_number}}. The payment details are as follows:{% endblocktrans %}</p>
+
+<p>
+{% for line in lines_data %}
+{% trans 'Course:' %} {{ line.1.title }}<br/>
+{% trans 'Certificate:'%} {% if line.1.type == 'professional' %}{% trans 'Graduation Certificate (After passing identity verification and exams)' %} {% endif %} <br/>
+{% trans 'Course Amount:' %} {{ line.0.quantity }}<br/>
+{% trans 'Price:' %} {{ line.0.line_price_incl_tax|currency:order.currency }}{% endfor %}<br/>
+{% trans 'Total:' %} {{ order.basket_total_incl_tax|currency:order.currency }}<br/>
+{% trans 'Address:' %}{% for field in order.shipping_address.active_address_fields %}  {{ field }}<br/>
+{% endfor %}</p>
+<br/>
+{% trans 'Thank you for choosing EliteMBA!' %}<br/>
+{% trans 'EliteMBA team' %}<br/>

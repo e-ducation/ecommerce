@@ -131,7 +131,7 @@ class AlipayPaymentExecutionView(EdxOrderPlacementMixin, APIView):
                 request=request
             )
             self.handle_post_order(order)
-            self.send_confirmation_message(order, self.communication_type_code)
+            self.send_receipt_email(order, user, request.site)
 
         except Exception:  # pylint: disable=broad-except
             self.log_order_placement_exception(basket.order_number, basket.id)

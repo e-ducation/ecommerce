@@ -6,6 +6,9 @@ import logging
 
 import waffle
 from django.db import transaction
+from django.conf import settings
+from django.template import loader
+from django.core.mail import EmailMessage
 from ecommerce_worker.fulfillment.v1.tasks import fulfill_order
 from oscar.apps.checkout.mixins import OrderPlacementMixin
 from oscar.core.loading import get_class, get_model
@@ -19,6 +22,7 @@ from ecommerce.extensions.checkout.exceptions import BasketNotFreeError
 from ecommerce.extensions.customer.utils import Dispatcher
 from ecommerce.extensions.offer.constants import OFFER_ASSIGNMENT_REVOKED, OFFER_REDEEMED
 from ecommerce.extensions.order.constants import PaymentEventTypeName
+from ecommerce.courses.utils import get_course_info_from_catalog
 from ecommerce.invoice.models import Invoice
 
 CommunicationEventType = get_model('customer', 'CommunicationEventType')
@@ -226,6 +230,22 @@ class EdxOrderPlacementMixin(OrderPlacementMixin):
         )
 
         return order
+
+    def send_receipt_email(self, order, user, site):
+        '''
+        send receipt email
+        '''
+        try:
+            lines_data = [(line, get_course_info_from_catalog(site, line.product)) for line in order.lines.all()]
+            content = loader.render_to_string('edx/checkout/receipt_email.html',
+                                              {'order': order, 'lines_data': lines_data})
+            subject = loader.render_to_string('oscar/customer/emails/commtype_order_placed_subject.txt',
+                                              {'order': order})
+            email_msg = EmailMessage(subject.strip(), content, settings.OSCAR_FROM_EMAIL, [user.email])
+            email_msg.content_subtype = "html"
+            email_msg.send()
+        except Exception, e:
+            logger.exception(e)
 
     def send_confirmation_message(self, order, code, site=None, **kwargs):
         ctx = self.get_message_context(order)
