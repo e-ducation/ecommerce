@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 11:01+0000\n"
+"POT-Creation-Date: 2019-03-18 06:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2021,6 +2021,52 @@ msgstr ""
 msgid "Find more courses"
 msgstr ""
 
+#: templates/edx/checkout/receipt_email.html
+#, python-format
+msgid ""
+"You have successfully completed the payment for the order %(order_number)s. "
+"The payment details are as follows:"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Course:"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Certificate:"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Graduation Certificate (After passing identity verification and exams)"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Course Amount:"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+#: templates/edx/credit/checkout.html
+msgid "Price:"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+#: templates/edx/credit/checkout.html
+#: templates/oscar/basket/partials/hosted_checkout_basket.html
+msgid "Total:"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Address:"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Thank you for choosing EliteMBA!"
+msgstr ""
+
+#: templates/edx/checkout/receipt_email.html
+msgid "EliteMBA team"
+msgstr ""
+
 #: templates/edx/checkout/receipt_not_found.html
 msgid "Order Not Found"
 msgstr ""
@@ -2096,16 +2142,7 @@ msgid ""
 msgstr ""
 
 #: templates/edx/credit/checkout.html
-msgid "Price:"
-msgstr ""
-
-#: templates/edx/credit/checkout.html
 msgid "Discount:"
-msgstr ""
-
-#: templates/edx/credit/checkout.html
-#: templates/oscar/basket/partials/hosted_checkout_basket.html
-msgid "Total:"
 msgstr ""
 
 #: templates/edx/credit/checkout.html

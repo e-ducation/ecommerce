@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 11:01+0000\n"
+"POT-Creation-Date: 2019-03-18 06:51+0000\n"
 "PO-Revision-Date: 2019-01-04 04:29+0000\n"
 "Last-Translator: li ying <code@eliteu.cn>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/e-ducation/teams/93939/zh_CN/)\n"
@@ -1537,7 +1537,7 @@ msgstr "简体中文"
 
 #: settings/base.py
 msgid "English"
-msgstr "英语"
+msgstr "英文"
 
 #: settings/base.py
 msgid "Spanish"
@@ -2054,6 +2054,52 @@ msgstr "前往面板"
 msgid "Find more courses"
 msgstr "寻找更多课程"
 
+#: templates/edx/checkout/receipt_email.html
+#, python-format
+msgid ""
+"You have successfully completed the payment for the order %(order_number)s. "
+"The payment details are as follows:"
+msgstr "您已经成功完成订单 %(order_number)s 的支付，以下为订单详情："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Course:"
+msgstr "课程："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Certificate:"
+msgstr "证书："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Graduation Certificate (After passing identity verification and exams)"
+msgstr "结课证书（通过考核及身份认证后）"
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Course Amount:"
+msgstr "数量："
+
+#: templates/edx/checkout/receipt_email.html
+#: templates/edx/credit/checkout.html
+msgid "Price:"
+msgstr "价格："
+
+#: templates/edx/checkout/receipt_email.html
+#: templates/edx/credit/checkout.html
+#: templates/oscar/basket/partials/hosted_checkout_basket.html
+msgid "Total:"
+msgstr "总共:"
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Address:"
+msgstr "送货地址："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Thank you for choosing EliteMBA!"
+msgstr "感谢选择英荔商学院！"
+
+#: templates/edx/checkout/receipt_email.html
+msgid "EliteMBA team"
+msgstr "英荔团队"
+
 #: templates/edx/checkout/receipt_not_found.html
 msgid "Order Not Found"
 msgstr "未找到订单"
@@ -2143,17 +2189,8 @@ msgstr ""
 "选择以下其中一个机构来购买您的学分。"
 
 #: templates/edx/credit/checkout.html
-msgid "Price:"
-msgstr "价格："
-
-#: templates/edx/credit/checkout.html
 msgid "Discount:"
 msgstr "折扣："
-
-#: templates/edx/credit/checkout.html
-#: templates/oscar/basket/partials/hosted_checkout_basket.html
-msgid "Total:"
-msgstr "总共:"
 
 #: templates/edx/credit/checkout.html
 msgid "You deserve it."
