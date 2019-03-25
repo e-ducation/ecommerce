@@ -678,6 +678,14 @@
     .receipt .table .order-total{
         margin-left: 0;
     }
+    .receipt .order-summary{
+        padding: 10px;
+        >div{
+            display: block;
+            line-height: 1.2;
+            margin: 0;
+        }
+    }
 }
 @media screen and (max-width: 375px){
     .receipt #cta-nav-links .nav-link{
