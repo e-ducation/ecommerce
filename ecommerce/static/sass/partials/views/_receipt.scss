@@ -30,6 +30,7 @@
         > div {
             margin-bottom: 15px;
             line-height: 22px;
+            padding: 0 10px;
         }
 
         .billing-address {
@@ -105,37 +106,6 @@
             text-align: center;
         }
 
-        #verify_now_button {
-            display: block;
-            width: 100%;
-            margin: 0 auto;
-            padding: 13px 35px;
-            text-align: center;
-            background-image: none;
-            text-decoration: none;
-            opacity: 0.95;
-            box-sizing: border-box;
-            display: inline-block;
-            width: auto;
-            padding: 0 20px !important;
-            font-size: 14px;
-            letter-spacing: 0.3px;
-            height: 36px;
-            line-height: 34px !important;
-            border-radius: 3px;
-            font-weight: normal;
-            cursor: pointer;
-            background: #4788C7;
-            border: 1px solid #4788C7;
-            color: #fff;
-            text-shadow: none;
-            box-shadow: none;
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Tahoma，Arial,"PingFang SC","Hiragino Sans GB","Heiti SC","Microsoft YaHei","WenQuanYi Micro Hei",SimHei，sans-serif;
-            outline: none;
-            &:hover {
-                text-decoration: none;
-            }
-        }
     }
     .receipt .copy>div .confirm-message{
         padding: 0 10px;
@@ -169,7 +139,7 @@
         margin: 40px 0;
 
         .nav-link {
-            font-size: 16px;
+            @extend %btn-my-primary;
         }
 
         .dashboard-link {
@@ -640,16 +610,7 @@
     padding-right: 0;
 }
 .receipt .nav-wizard #verify_now_button{
-    display: block;
-    width: 205px;
-    margin: 0 auto;
-    padding: 6px 15px;
-    text-align: center;
-    background-color: #4788c7;
-    border-radius: 4px;
-    border: solid 1px #346ca3;
-    font-size: 14px;
-    box-shadow: none;
+    @extend %btn-my-primary;
 }
 .receipt .nav-wizard #verify_later_button{
     color: #346ca3;
@@ -658,39 +619,6 @@
 .receipt #cta-nav-links {
 
     &:active, &:hover, &:focus {
-        border-bottom: none;
-    }
-}
-.receipt #cta-nav-links .nav-link{
-    display: inline-block;
-    color: #fff;
-    padding: 5px 13px;
-    border-radius: 2px;
-    font-size: 14px;
-    line-height: 22px;
-    background-color: #4788c7;
-    background-image: none;
-    text-decoration: none;
-    opacity: 0.95;
-    box-sizing: border-box;
-    display: inline-block;
-    width: auto;
-    padding: 0 20px !important;
-    font-size: 14px;
-    letter-spacing: 0.3px;
-    height: 36px;
-    line-height: 34px !important;
-    border-radius: 3px;
-    font-weight: normal;
-    cursor: pointer;
-    background: #4788C7;
-    border: 1px solid #4788C7;
-    color: #fff;
-    text-shadow: none;
-    box-shadow: none;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Tahoma，Arial,"PingFang SC","Hiragino Sans GB","Heiti SC","Microsoft YaHei","WenQuanYi Micro Hei",SimHei，sans-serif;
-    outline: none;
-    &:hover,&:focus{
         border-bottom: none;
     }
 }
