@@ -9,7 +9,7 @@
 {% trans 'Certificate:'%} {% if line.1.type == 'professional' %}{% trans 'Graduation Certificate (After passing identity verification and exams)' %} {% endif %} <br/>
 {% trans 'Course Amount:' %} {{ line.0.quantity }}<br/>
 {% trans 'Price:' %} {{ line.0.line_price_incl_tax|currency:order.currency }}{% endfor %}<br/>
-{% trans 'Total:' %} {{ order.basket_total_incl_tax|currency:order.currency }}<br/>
+{% trans 'Total:' context "receipt email" %} {{ order.basket_total_incl_tax|currency:order.currency }}<br/>
 {% trans 'Address:' %}{% for field in order.shipping_address.active_address_fields %}  {{ field }}<br/>
 {% endfor %}</p>
 <br/>
