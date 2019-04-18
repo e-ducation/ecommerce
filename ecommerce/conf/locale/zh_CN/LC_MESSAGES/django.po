@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-18 06:51+0000\n"
+"POT-Creation-Date: 2019-04-18 07:12+0000\n"
 "PO-Revision-Date: 2019-01-04 04:29+0000\n"
 "Last-Translator: li ying <code@eliteu.cn>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/e-ducation/teams/93939/zh_CN/)\n"
@@ -2083,10 +2083,9 @@ msgid "Price:"
 msgstr "价格："
 
 #: templates/edx/checkout/receipt_email.html
-#: templates/edx/credit/checkout.html
-#: templates/oscar/basket/partials/hosted_checkout_basket.html
+msgctxt "receipt email"
 msgid "Total:"
-msgstr "总共:"
+msgstr "订单总额"
 
 #: templates/edx/checkout/receipt_email.html
 msgid "Address:"
@@ -2191,6 +2190,11 @@ msgstr ""
 #: templates/edx/credit/checkout.html
 msgid "Discount:"
 msgstr "折扣："
+
+#: templates/edx/credit/checkout.html
+#: templates/oscar/basket/partials/hosted_checkout_basket.html
+msgid "Total:"
+msgstr "总共:"
 
 #: templates/edx/credit/checkout.html
 msgid "You deserve it."

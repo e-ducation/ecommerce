@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# li ying <code@eliteu.cn>, 2019
 # 家璧 刘 <jb.liu@eliteu.com.cn>, 2019
+# li ying <code@eliteu.cn>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-08 10:10+0000\n"
+"POT-Creation-Date: 2019-04-18 07:12+0000\n"
 "PO-Revision-Date: 2019-01-04 04:29+0000\n"
-"Last-Translator: 家璧 刘 <jb.liu@eliteu.com.cn>, 2019\n"
+"Last-Translator: li ying <code@eliteu.cn>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/e-ducation/teams/93939/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -378,7 +378,7 @@ msgid ""
 "complete. If you need additional assistance, please contact the {site_name} "
 "Support Team."
 msgstr ""
-"学分当前不适用于“{course_name}”。如果您当前报读了该课程，请在所有分级完成之后再次尝试。如需其它帮助，请联系 {site_name} "
+"学分当前不适用于“{course_name}”。如果您当前报读了该课程，请在所有分级完成之后再次尝试。如需其他帮助，请联系 {site_name} "
 "支持团队。 "
 
 #: credit/views.py
@@ -757,7 +757,7 @@ msgstr "完成订单后，您将收到课程学分。"
 msgid ""
 "After you complete your order you will be automatically enrolled in the "
 "course."
-msgstr "完成订单后，您将自动在此课程中进行选课。"
+msgstr "完成订单后，您会自动报名此课程。"
 
 #: extensions/basket/views.py
 #, python-brace-format
@@ -1537,7 +1537,7 @@ msgstr "简体中文"
 
 #: settings/base.py
 msgid "English"
-msgstr "英语"
+msgstr "英文"
 
 #: settings/base.py
 msgid "Spanish"
@@ -1633,7 +1633,7 @@ msgstr "版权 © %(year)s %(platform_name)s。保留所有权利。"
 #: templates/customer/emails/commtype_course_purchased_body.txt
 #, python-format
 msgid "Hi %(full_name)s,"
-msgstr "%(full_name)s 你好,"
+msgstr "%(full_name)s 您好,"
 
 #: templates/customer/emails/commtype_course_purchased_body.html
 #: templates/customer/emails/commtype_course_purchased_body.txt
@@ -1643,7 +1643,7 @@ msgid ""
 "your next credit or debit card statement with a company name of "
 "%(platform_name)s."
 msgstr ""
-"感谢你购买 %(course_title)s。以下费用将以公司名称为 %(platform_name)s 显示在您的下一次信用卡或借记卡账单中。"
+"感谢您购买 %(course_title)s。以下费用将以公司名称为 %(platform_name)s 显示在您的下一次信用卡或借记卡账单中。"
 
 #: templates/customer/emails/commtype_course_purchased_body.html
 #: templates/customer/emails/commtype_course_purchased_body.txt
@@ -1651,7 +1651,7 @@ msgstr ""
 msgid ""
 "You can access your course and complete your verification (if required) on "
 "your %(platform_name)s dashboard. "
-msgstr "你可以访问你的课程并在你的 %(platform_name)s 仪表板上完成认证（如要求）。"
+msgstr "您可以访问您的课程并在您的 %(platform_name)s 仪表板上完成认证（如要求）。"
 
 #: templates/customer/emails/commtype_course_purchased_body.html
 #: templates/customer/emails/commtype_course_purchased_body.txt
@@ -1676,7 +1676,7 @@ msgstr "%(platform_name)s团队"
 msgid ""
 "You are receiving this email because you purchased a seat in the "
 "%(platform_name)s course %(course_title)s."
-msgstr "你收到此电子邮件是因为你在 %(platform_name)s 的课程 %(course_title)s中购买了一个座席。"
+msgstr "您收到此电子邮件是因为您在 %(platform_name)s 的课程 %(course_title)s中购买了一个座席。"
 
 #: templates/customer/emails/commtype_course_purchased_body.txt
 msgid "Receipt Confirmation for: "
@@ -1764,7 +1764,7 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                            您收到此信息是因为你购买了 %(platform_name)s 课程 %(course_title)s 的学分时。"
+"                            您收到此信息是因为您购买了 %(platform_name)s 课程 %(course_title)s 的学分时。"
 
 #: templates/customer/emails/commtype_credit_receipt_body.txt
 msgid "Payment confirmation for: "
@@ -2054,6 +2054,51 @@ msgstr "前往面板"
 msgid "Find more courses"
 msgstr "寻找更多课程"
 
+#: templates/edx/checkout/receipt_email.html
+#, python-format
+msgid ""
+"You have successfully completed the payment for the order %(order_number)s. "
+"The payment details are as follows:"
+msgstr "您已经成功完成订单 %(order_number)s 的支付，以下为订单详情："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Course:"
+msgstr "课程："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Certificate:"
+msgstr "证书："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Graduation Certificate (After passing identity verification and exams)"
+msgstr "结课证书（通过考核及身份认证后）"
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Course Amount:"
+msgstr "数量："
+
+#: templates/edx/checkout/receipt_email.html
+#: templates/edx/credit/checkout.html
+msgid "Price:"
+msgstr "价格："
+
+#: templates/edx/checkout/receipt_email.html
+msgctxt "receipt email"
+msgid "Total:"
+msgstr "订单总额"
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Address:"
+msgstr "送货地址："
+
+#: templates/edx/checkout/receipt_email.html
+msgid "Thank you for choosing EliteMBA!"
+msgstr "感谢选择英荔商学院！"
+
+#: templates/edx/checkout/receipt_email.html
+msgid "EliteMBA team"
+msgstr "英荔团队"
+
 #: templates/edx/checkout/receipt_not_found.html
 msgid "Order Not Found"
 msgstr "未找到订单"
@@ -2138,13 +2183,9 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"                        恭喜你！你有资格购买此课程的学术课程学分。\n"
-"你必须在 %(date)s 之前购买你的学分。\n"
-"选择以下其中一个机构来购买你的学分。"
-
-#: templates/edx/credit/checkout.html
-msgid "Price:"
-msgstr "价格："
+"                        恭喜您！您有资格购买此课程的学术课程学分。\n"
+"您必须在 %(date)s 之前购买您的学分。\n"
+"选择以下其中一个机构来购买您的学分。"
 
 #: templates/edx/credit/checkout.html
 msgid "Discount:"
@@ -2157,7 +2198,7 @@ msgstr "总共:"
 
 #: templates/edx/credit/checkout.html
 msgid "You deserve it."
-msgstr "这是你应得的。"
+msgstr "这是您应得的。"
 
 #: templates/edx/credit/checkout.html
 msgid ""
@@ -2355,6 +2396,11 @@ msgstr ""
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
 msgid "Remove coupon"
 msgstr "移除优惠券"
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgctxt "Remove coupon"
+msgid "Remove"
+msgstr "移除"
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
 msgid "Add coupon code"
