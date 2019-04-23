@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-18 07:12+0000\n"
+"POT-Creation-Date: 2019-04-23 04:09+0000\n"
 "PO-Revision-Date: 2019-01-04 04:29+0000\n"
 "Last-Translator: li ying <code@eliteu.cn>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/e-ducation/teams/93939/zh_CN/)\n"
@@ -2437,6 +2437,23 @@ msgstr "Apple Pay支付"
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
 msgid "AliPay"
 msgstr "支付宝"
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid "Amount Paid:"
+msgstr "实付金额："
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid ""
+"Please complete the payment within 2 hours, otherwise the purchase may fail."
+msgstr "请在2小时内完成支付，否则可能导致购买失败"
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid "Please scan WeChat QR Code"
+msgstr "请使用微信扫描二维码"
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid "to complete payment"
+msgstr "以完成支付"
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
 msgid "card holder information"

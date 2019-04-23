@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-18 07:12+0000\n"
+"POT-Creation-Date: 2019-04-23 04:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2373,6 +2373,23 @@ msgstr ""
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
 msgid "AliPay"
+msgstr ""
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid "Amount Paid:"
+msgstr ""
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid ""
+"Please complete the payment within 2 hours, otherwise the purchase may fail."
+msgstr ""
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid "Please scan WeChat QR Code"
+msgstr ""
+
+#: templates/oscar/basket/partials/client_side_checkout_basket.html
+msgid "to complete payment"
 msgstr ""
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
