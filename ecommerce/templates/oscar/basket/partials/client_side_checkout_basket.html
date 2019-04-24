@@ -199,7 +199,7 @@
                   </div>
                   {% if wechatpay_enabled %}
                     <div id="paying" class="wxpay-content" >
-                        <div class="wxpay-number">{% trans "Amount Paid:" %}{{ order_total.incl_tax|currency:basket.currency }}</div>
+                        <div class="wxpay-number">{% trans "Amount Paid:" %} {{ order_total.incl_tax|currency:basket.currency }}</div>
                         <div>{% trans "Please complete the payment within 2 hours, otherwise the purchase may fail." %}</div>
                         <div class="wxpay-scanner">
                             <img src="data:image/png;base64,{{wechatpay_code_url}}" width="500px" />
