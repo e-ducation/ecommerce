@@ -199,13 +199,12 @@
                   </div>
                   {% if wechatpay_enabled %}
                     <div id="paying" class="wxpay-content" >
-                        <div class="wxpay-number">{% trans "Amount Paid:" %} {{ order_total.incl_tax|currency:basket.currency }}</div>
+                        <div class="wxpay-number">{% trans "Amount Paid: " %}{{ order_total.incl_tax|currency:basket.currency }}</div>
                         <div>{% trans "Please complete the payment within 2 hours, otherwise the purchase may fail." %}</div>
                         <div class="wxpay-scanner">
                             <img src="data:image/png;base64,{{wechatpay_code_url}}" width="500px" />
                         </div>
-                        <div>{% trans "Please scan WeChat QR Code" %}</div>
-                        <div style="margin-top:5px">{% trans "to complete payment" %}</div>
+                        <div class="wxpay-tip">{% trans "Please scan Wechat QR Code to complete payment" %}</div>
                     </div>
                   {% endif %}
             </div>
