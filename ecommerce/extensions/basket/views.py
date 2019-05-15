@@ -66,9 +66,10 @@ class BasketAddItemsView(View):
         if 'username' in request.GET and request.user.username != request.GET.get('username'):
             logout(request)
             query_dict = request.GET.dict()
+            query_dict['sku'] = request.GET.getlist('sku')
             query_dict.pop('username')
             redirect_url = '{path}?{query_string}'.format(path=request.path,
-                                                          query_string=urlencode(query_dict))
+                                                          query_string=urlencode(query_dict, doseq=True))
             logger.info('logout user {username}'.format(username=request.GET.get('username')))
             return redirect(redirect_url)
 
