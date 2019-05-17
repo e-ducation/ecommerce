@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-23 04:09+0000\n"
+"POT-Creation-Date: 2019-05-16 04:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2376,7 +2376,7 @@ msgid "AliPay"
 msgstr ""
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
-msgid "Amount Paid:"
+msgid "Amount Paid: "
 msgstr ""
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
@@ -2385,7 +2385,7 @@ msgid ""
 msgstr ""
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
-msgid "Please scan WeChat QR Code"
+msgid "Please scan Wechat QR Code"
 msgstr ""
 
 #: templates/oscar/basket/partials/client_side_checkout_basket.html
