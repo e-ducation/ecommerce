@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Common settings and globals."""
 import datetime
 import os
@@ -14,6 +15,7 @@ from ecommerce.settings._oscar import *
 # PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+ELITEU_PAYMENT_ROOT = dirname(dirname(dirname(dirname(dirname(abspath(__file__))))))
 
 # Absolute filesystem path to the top-level project folder
 SITE_ROOT = dirname(DJANGO_ROOT)
@@ -24,6 +26,7 @@ SITE_NAME = basename(DJANGO_ROOT)
 # Add our project to our pythonpath; this way, we don't need to type our project
 # name in our dotted import paths
 path.append(DJANGO_ROOT)
+path.append('{payment_root}/edxapp/eliteu-payments'.format(payment_root=ELITEU_PAYMENT_ROOT))
 # END PATH CONFIGURATION
 
 
@@ -68,7 +71,7 @@ TIME_ZONE = 'America/New_York'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'zh-cn'
 
 SITE_ID = 1
 
@@ -76,6 +79,7 @@ SITE_ID = 1
 USE_I18N = True
 
 LANGUAGES = (
+    ('zh-cn', _('zh-cn')),
     ('en', _('English')),
     ('es', _('Spanish')),
     ('es-419', _('Spanish (Latin American)')),
@@ -489,7 +493,7 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 # Detailed information at: https://docs.djangoproject.com/en/dev/ref/settings/
 SESSION_COOKIE_NAME = 'ecommerce_sessionid'
 CSRF_COOKIE_NAME = 'ecommerce_csrftoken'
-LANGUAGE_COOKIE_NAME = 'ecommerce_language'
+LANGUAGE_COOKIE_NAME = 'openedx-language-preference'
 SESSION_COOKIE_SECURE = False
 # END COOKIE CONFIGURATION
 
@@ -650,3 +654,4 @@ OFFER_ASSIGNMENT_EMAIL_DEFAULT_SUBJECT = 'New edX course assignment'
 SAILTHRU_KEY = None
 SAILTHRU_SECRET = None
 
+CURRENCY_SYMBOL = '$'

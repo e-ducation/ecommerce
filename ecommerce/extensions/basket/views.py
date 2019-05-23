@@ -8,9 +8,11 @@ from urllib import urlencode
 import dateutil.parser
 import newrelic.agent
 import waffle
+from django.conf import settings
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.html import escape
+from django.contrib.auth import logout
 from django.utils.translation import ugettext as _
 from opaque_keys.edx.keys import CourseKey
 from oscar.apps.basket.views import VoucherAddView as BaseVoucherAddView
@@ -18,6 +20,7 @@ from oscar.apps.basket.views import VoucherRemoveView as BaseVoucherRemoveView
 from oscar.apps.basket.views import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from requests.exceptions import ConnectionError, Timeout
 from slumber.exceptions import SlumberBaseException
+from edx_rest_api_client.client import EdxRestApiClient
 
 from ecommerce.core.exceptions import SiteConfigurationError
 from ecommerce.core.url_utils import get_lms_course_about_url, get_lms_url
@@ -59,6 +62,17 @@ class BasketAddItemsView(View):
     """
 
     def get(self, request):
+        # lms/ecommerce has different user
+        if 'username' in request.GET and request.user.username != request.GET.get('username'):
+            logout(request)
+            query_dict = request.GET.dict()
+            query_dict['sku'] = request.GET.getlist('sku')
+            query_dict.pop('username')
+            redirect_url = '{path}?{query_string}'.format(path=request.path,
+                                                          query_string=urlencode(query_dict, doseq=True))
+            logger.info('logout user {username}'.format(username=request.GET.get('username')))
+            return redirect(redirect_url)
+
         partner = get_partner_for_site(request)
 
         skus = [escape(sku) for sku in request.GET.getlist('sku')]
@@ -70,6 +84,16 @@ class BasketAddItemsView(View):
         products = Product.objects.filter(stockrecords__partner=partner, stockrecords__partner_sku__in=skus)
         if not products:
             return HttpResponseBadRequest(_('Products with SKU(s) [{skus}] do not exist.').format(skus=', '.join(skus)))
+
+        try:
+            lms_api = EdxRestApiClient(get_lms_url('/api/v1/vip/'), oauth_access_token=request.user.access_token,
+                                       append_slash=False)
+            # user is vip, redirect lms course about
+            if lms_api.info().get().get('data', {}).get('status') is True:
+                course_key = CourseKey.from_string(products[0].attr.course_key)
+                return redirect(get_lms_course_about_url(course_key=course_key))
+        except Exception, e:
+            logger.exception(e)
 
         logger.info('Starting payment flow for user[%s] for products[%s].', request.user.username, skus)
 
@@ -112,7 +136,7 @@ class BasketAddItemsView(View):
         try:
             prepare_basket(request, available_products, voucher)
         except AlreadyPlacedOrderException:
-            return render(request, 'edx/error.html', {'error': _('You have already purchased these products')})
+            return render(request, 'edx/error.html', {'error': _('You have already purchased these products'), 'lms_contact_url': get_lms_url('/contact')})
         url = add_utm_params_to_url(reverse('basket:summary'), self.request.GET.items())
         return HttpResponseRedirect(url, status=303)
 
@@ -301,12 +325,14 @@ class BasketSummaryView(BasketView):
             else:
                 benefit_value = None
 
+            product_course_id = line.product.course_id.split('+')
             line_data.update({
                 'sku': line.product.stockrecords.first().partner_sku,
                 'benefit_value': benefit_value,
                 'enrollment_code': line.product.is_enrollment_code_product,
                 'line': line,
                 'seat_type': self._determine_product_type(line.product),
+                'product_course_id': product_course_id[1] if len(product_course_id) > 1 else '',
             })
             lines_data.append(line_data)
 
@@ -336,6 +362,12 @@ class BasketSummaryView(BasketView):
 
         if payment_processor_class:
             payment_processor = payment_processor_class(self.request.site)
+            wechatpay_code_url = ''
+            for p in payment_processors:
+                if p.NAME == 'wechatpay':
+                    wechatpay_code_url = p(self.request.site).get_transaction_parameters(
+                        self.request.basket, request=self.request).get('qrcode_img', '')
+                    break
             current_year = datetime.today().year
 
             return {
@@ -349,6 +381,10 @@ class BasketSummaryView(BasketView):
                     label_suffix=''
                 ),
                 'paypal_enabled': 'paypal' in (p.NAME for p in payment_processors),
+                'cybersource_enabled': 'cybersource' in (p.NAME for p in payment_processors),
+                'alipay_enabled': 'alipay' in (p.NAME for p in payment_processors),
+                'wechatpay_enabled': 'wechatpay' in (p.NAME for p in payment_processors),
+                'wechatpay_code_url': wechatpay_code_url,
                 # Assumption is that the credit card duration is 15 years
                 'years': range(current_year, current_year + 16),
             }

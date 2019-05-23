@@ -9,6 +9,7 @@ import yaml
 from django.core.exceptions import ImproperlyConfigured
 
 from ecommerce.settings.base import *
+from ecommerce.settings.eliteu import *
 
 # Protocol used for construcing absolute callback URLs
 PROTOCOL = 'https'
@@ -18,7 +19,7 @@ COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
 
 # Email configuration
-EMAIL_BACKEND = 'django_ses.SESBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Minify CSS
 COMPRESS_CSS_FILTERS += [
@@ -47,6 +48,9 @@ ALLOWED_HOSTS = ['*']
 DICT_UPDATE_KEYS = ('JWT_AUTH',)
 
 CONFIG_FILE = get_env_setting('ECOMMERCE_CFG')
+
+ENABLE_ALIPAY_WECHATPAY = False
+
 with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
     config_from_yaml = yaml.load(f)
 
@@ -59,6 +63,16 @@ with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
             vars()[key].update(value)
 
     vars().update(config_from_yaml)
+
+if ENABLE_ALIPAY_WECHATPAY:
+    ALIPAY_INFO = PAYMENT_PROCESSOR_CONFIG.get('edx', {}).get('alipay', ALIPAY_INFO)
+    WECHAT_PAY_INFO = PAYMENT_PROCESSOR_CONFIG.get('edx', {}).get('wechatpay', WECHAT_PAY_INFO)
+    PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS)
+    PAYMENT_PROCESSORS.extend([
+        'ecommerce.extensions.payment.processors.alipay.AliPay',
+        'ecommerce.extensions.payment.processors.wechatpay.WechatPay',
+    ])
+    PAYMENT_PROCESSORS = tuple(PAYMENT_PROCESSORS)
 
 DB_OVERRIDES = dict(
     PASSWORD=environ.get('DB_MIGRATION_PASS', DATABASES['default']['PASSWORD']),

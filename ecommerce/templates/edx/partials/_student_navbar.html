@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block navbar_brand %}
-    <h1 class="navbar-brand">
+    <a href="{{ lms_base_url }}" class="navbar-brand">
         <img class="navbar-brand-logo" alt="{{ platform_name }} logo" src="{% static 'images/default-logo.png' %}"/>
-    </h1>
+    </a>
 {% endblock navbar_brand %}
 
 {% block dropdown_menu %}

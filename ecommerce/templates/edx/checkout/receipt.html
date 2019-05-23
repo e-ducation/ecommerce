@@ -27,11 +27,14 @@
        data-currency="{{ order.currency }}"
        data-order-id="{{ order.number }}"
        data-total-amount="{{ order.total_incl_tax | unlocalize }}">
+      <p class="ecommerce-icon-wrap">
+        <img class="ecommerce-icon" src="/static/images/icons8-card_in_use.png" />
+      </p>
       <h2 class="thank-you">{% trans "Thank you for your order!" %}</h2>
 
       <div class="list-info">
         <div class="info-item payment-info row">
-          <div class="copy col-md-8">
+          <div class="copy">
             <div class="confirm-message">
               {% captureas link_start %}
                 <a href="mailto:{{ order.user.email }}">
@@ -59,17 +62,19 @@
             {% endif %}
           </div>
 
-          <div class="order-headers order-summary col-md-4">
-            <dl>
-              <dt>{% trans "Order Number:" %}</dt>
-              <dd>{{ order.number }}</dd>
-              {% if payment_method %}
-                <dt>{% trans "Payment Method:" %}</dt>
-                <dd>{{ payment_method }}</dd>
-              {% endif %}
-              <dt>{% trans "Order Date:" %}</dt>
-              <dd>{{ order.date_placed|date:"E d, Y" }}</dd>
-            </dl>
+          <div class="order-headers order-summary">
+            <div>
+              <span class="order-summary-label">{% trans "Order Number:" %}</span>
+              <span class="order-summary-value">{{ order.number }}</span>
+            </div>
+            <div>
+              <span class="order-summary-label">{% trans "Payment Method:" %}</span>
+              <span class="order-summary-value">{% if payment_method == "alipay" %}{% trans "Alipay" %}{% elif payment_method == "wechatpay" %}{% trans "Wechat Pay" %}{% else %}{% trans "Coupons" %}{% endif %}</span>
+            </div>
+            <div>
+              <span class="order-summary-label">{% trans "Order Date:" %}</span>
+              <span class="order-summary-value">{{ order.date_placed|date:"SHORT_DATE_FORMAT" }}</span>
+            </div>
           </div>
         </div>
 
@@ -179,7 +184,7 @@
         </div>
       {% endif %}
       <div id="cta-nav-links" class="row">
-        <div class="col-xs-12 text-right">
+        <div class="col-xs-12 text-center">
           {% if not show_verification_banner %}
           <a class="dashboard-link nav-link" href="{{ order_dashboard_url }}">
             {% trans "Go to dashboard" %}

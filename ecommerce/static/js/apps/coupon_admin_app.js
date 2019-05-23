@@ -37,6 +37,11 @@ require([
 
             ecommerce.coupons.enterprise_customers = new EnterpriseCustomerCollection();
 
+            ecommerce.currency = {
+                currencyCode: $app.data('currency-code'),
+                currencySymbol: $app.data('currency-symbol')
+            };
+
             $.when(ecommerce.coupons.categories.fetch(),
                 ecommerce.coupons.catalogs.fetch(),
                 ecommerce.coupons.enterprise_customers.fetch()).always(

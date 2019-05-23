@@ -96,3 +96,8 @@ if settings.DEBUG:  # pragma: no cover
         urlpatterns += [
             url(r'^__debug__/', include(debug_toolbar.urls))
         ]
+
+if settings.ENABLE_ALIPAY_WECHATPAY:
+    urlpatterns += [
+        url(r'', include('payments.urls')),
+    ]
