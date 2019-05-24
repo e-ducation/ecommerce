@@ -38,8 +38,8 @@ require([
             ecommerce.coupons.enterprise_customers = new EnterpriseCustomerCollection();
 
             ecommerce.currency = {
-                currencyCode: $app.data('currency-code'),
-                currencySymbol: $app.data('currency-symbol')
+                currencyCode: $('#app').data('currency-code'),
+                currencySymbol: $('#app').data('currency-symbol')
             };
 
             $.when(ecommerce.coupons.categories.fetch(),
