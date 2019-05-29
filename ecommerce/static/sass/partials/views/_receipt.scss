@@ -657,7 +657,11 @@
     }
 }
 
-
+@media screen and (max-width:768px){
+  .receipt .nav-wizard{
+    display: none;
+  }
+}
 @media screen and (max-width:568px){
     .receipt{
         margin: 20px 10px; 
