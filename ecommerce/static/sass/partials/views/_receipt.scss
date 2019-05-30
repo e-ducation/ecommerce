@@ -140,6 +140,7 @@
 
         .nav-link {
             @extend %btn-my-primary;
+            margin-bottom: 20px;
         }
 
         .dashboard-link {
