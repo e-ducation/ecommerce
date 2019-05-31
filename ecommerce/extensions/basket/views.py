@@ -85,15 +85,16 @@ class BasketAddItemsView(View):
         if not products:
             return HttpResponseBadRequest(_('Products with SKU(s) [{skus}] do not exist.').format(skus=', '.join(skus)))
 
-        try:
-            lms_api = EdxRestApiClient(get_lms_url('/api/v1/vip/'), oauth_access_token=request.user.access_token,
-                                       append_slash=False)
-            # user is vip, redirect lms course about
-            if lms_api.info().get().get('data', {}).get('status') is True:
-                course_key = CourseKey.from_string(products[0].attr.course_key)
-                return redirect(get_lms_course_about_url(course_key=course_key))
-        except Exception, e:
-            logger.exception(e)
+        # TODO Vip purchase and program purchase conflict
+        #try:
+        #    lms_api = EdxRestApiClient(get_lms_url('/api/v1/vip/'), oauth_access_token=request.user.access_token,
+        #                               append_slash=False)
+        #    # user is vip, redirect lms course about
+        #    if lms_api.info().get().get('data', {}).get('status') is True:
+        #        course_key = CourseKey.from_string(products[0].attr.course_key)
+        #        return redirect(get_lms_course_about_url(course_key=course_key))
+        #except Exception, e:
+        #    logger.exception(e)
 
         logger.info('Starting payment flow for user[%s] for products[%s].', request.user.username, skus)
 
