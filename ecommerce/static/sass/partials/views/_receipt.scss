@@ -678,7 +678,7 @@
         margin-top: 20px;
     }
     .receipt #cta-nav-links .dashboard-link{
-        margin-left: 0;
+      margin: 0 10px 20px;
     }
     .receipt .table .order-total{
         margin-left: 0;
@@ -691,13 +691,7 @@
             margin: 0;
         }
     }
-}
-@media screen and (max-width: 375px){
     .receipt #cta-nav-links .nav-link{
-        padding: 5px 6px;
-    }
-    .receipt #cta-nav-links .dashboard-link{
-        margin-left: 0;
-        margin-right: 0;
+      padding: 5px 6px;
     }
 }
