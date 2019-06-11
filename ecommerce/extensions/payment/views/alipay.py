@@ -80,6 +80,8 @@ class AlipayPaymentExecutionView(EdxOrderPlacementMixin, APIView):
         basket = self._get_basket(payment_id)
         if not basket:
             return Response({'result': 'fail'})
+        if basket.status == 'Submitted':
+            return Response({'result': 'success'})
 
         try:
             lms_api = EdxRestApiClient(get_lms_url('/api/user/v1/'),

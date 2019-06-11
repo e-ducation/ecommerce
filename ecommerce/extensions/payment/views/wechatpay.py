@@ -5,6 +5,7 @@ import requests
 from django.urls import reverse
 from django.conf import settings
 from django.http import HttpResponse
+from django.core.cache import cache
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -45,6 +46,8 @@ class WechatpayOrderQuery(APIView):
     NOTPAY = 1
     SUCCESS = 2
     PAID = 3
+    START_QUERY_TIME = 300
+    PAYQUERY_KEY_EXPIRED = 3600
 
     def get(self, request, pk):
         '''
@@ -56,13 +59,20 @@ class WechatpayOrderQuery(APIView):
         try:
             basket = Basket.objects.get(owner=request.user, id=pk)
             order = Order.objects.filter(number=basket.order_number, status='Complete')
+            payquery_key = 'payquery_{}'.format(basket.id)
+            payquery_time_key = 'payquery_time_{}'.format(basket.id)
             if basket.status == 'Submitted':
                 status = self.PAID
             else:
-                status, resp = self.wechatpay_query(basket)
-                if status == self.PAID and not order:
-                    post_data = {'original_data': json.dumps({'data': resp})}
-                    requests.post(settings.ECOMMERCE_URL_ROOT + reverse('wechatpay:execute'), data=post_data)
+                if not cache.get(payquery_time_key):
+                    if not cache.get(payquery_key):
+                        cache.set(payquery_key, 1, self.PAYQUERY_KEY_EXPIRED)
+                        cache.set(payquery_time_key, 1, self.START_QUERY_TIME)
+                    elif cache.get(payquery_key):
+                        status, resp = self.wechatpay_query(basket)
+                        if status == self.PAID and not order:
+                            post_data = {'original_data': json.dumps({'data': resp})}
+                            requests.post(settings.ECOMMERCE_URL_ROOT + reverse('wechatpay:execute'), data=post_data)
 
             if status == self.PAID and order:
                 receipt_url = get_receipt_page_url(
@@ -70,6 +80,7 @@ class WechatpayOrderQuery(APIView):
                     site_configuration=basket.site.siteconfiguration
                 )
                 status = self.SUCCESS
+                cache.delete(payquery_key)
         except Exception, e:
             logger.exception(e)
 
