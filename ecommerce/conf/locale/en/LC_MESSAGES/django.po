@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 04:18+0000\n"
+"POT-Creation-Date: 2019-06-19 02:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,6 +233,14 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#: core/models.py extensions/offer/models.py
+msgid "EnterpriseCustomer UUID"
+msgstr ""
+
+#: core/models.py extensions/offer/models.py
+msgid "UUID for an EnterpriseCustomer from the Enterprise Service."
+msgstr ""
+
 #: coupons/views.py
 msgid "Coupon does not exist."
 msgstr ""
@@ -445,6 +453,10 @@ msgstr ""
 msgid "Discount of type {} provided by {} for {}."
 msgstr ""
 
+#: enterprise/templates/enterprise/enterprise_coupon_app.html
+msgid "Enterprise Coupon Codes"
+msgstr ""
+
 #: enterprise/templates/enterprise/enterpriseoffer_form.html
 #, python-format
 msgid "Edit Enterprise Offer: %(enterprise_customer_name)s"
@@ -620,19 +632,19 @@ msgid ""
 msgstr ""
 
 #: extensions/api/serializers.py
-msgid "Enrollment code"
-msgstr ""
-
-#: extensions/api/serializers.py
-msgid "Discount code"
-msgstr ""
-
-#: extensions/api/serializers.py
 msgid "ACTIVE"
 msgstr ""
 
 #: extensions/api/serializers.py
 msgid "INACTIVE"
+msgstr ""
+
+#: extensions/api/serializers.py
+msgid "Enrollment code"
+msgstr ""
+
+#: extensions/api/serializers.py
+msgid "Discount code"
 msgstr ""
 
 #: extensions/api/v2/views/baskets.py extensions/basket/views.py
@@ -845,15 +857,7 @@ msgid "Course Catalog ID from the Discovery Service."
 msgstr ""
 
 #: extensions/offer/models.py
-msgid "UUID for an EnterpriseCustomer from the Enterprise Service."
-msgstr ""
-
-#: extensions/offer/models.py
 msgid "UUID for an EnterpriseCustomerCatalog from the Enterprise Service."
-msgstr ""
-
-#: extensions/offer/models.py
-msgid "EnterpriseCustomer UUID"
 msgstr ""
 
 #: extensions/offer/models.py
@@ -871,6 +875,26 @@ msgstr ""
 
 #: extensions/offer/models.py
 msgid "JournalBundle UUID"
+msgstr ""
+
+#: extensions/offer/models.py
+msgid "Email to user pending."
+msgstr ""
+
+#: extensions/offer/models.py
+msgid "Code successfully assigned to user."
+msgstr ""
+
+#: extensions/offer/models.py
+msgid "Code has been redeemed by user."
+msgstr ""
+
+#: extensions/offer/models.py
+msgid "Email to user bounced."
+msgstr ""
+
+#: extensions/offer/models.py
+msgid "Code has been revoked for this user."
 msgstr ""
 
 #: extensions/offer/utils.py
@@ -1079,6 +1103,30 @@ msgstr ""
 #: templates/oscar/dashboard/orders/order_detail.html
 #: templates/oscar/dashboard/refunds/refund_detail.html
 msgid "Quantity"
+msgstr ""
+
+#: extensions/voucher/models.py
+msgid "Can be used once by one customer"
+msgstr ""
+
+#: extensions/voucher/models.py
+msgid "Can be used multiple times by multiple customers"
+msgstr ""
+
+#: extensions/voucher/models.py
+msgid "Can only be used once per customer"
+msgstr ""
+
+#: extensions/voucher/models.py
+msgid "Can be used multiple times by one customer"
+msgstr ""
+
+#: extensions/voucher/models.py
+msgid "Usage"
+msgstr ""
+
+#: extensions/voucher/models.py
+msgid "This voucher is only available to another user"
 msgstr ""
 
 #: extensions/voucher/tests/test_utils.py extensions/voucher/utils.py
@@ -2215,6 +2263,10 @@ msgstr ""
 #: templates/edx/error.html
 #, python-format
 msgid "If you need assistance, <a href=%(lms_contact_url)s>contact us</a>."
+msgstr ""
+
+#: templates/edx/partials/_administration_menu.html
+msgid "Enterprise Coupons"
 msgstr ""
 
 #: templates/edx/partials/_base_navbar.html
