@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 04:19+0000\n"
+"POT-Creation-Date: 2019-06-19 02:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: static/js/models/coupon_model.js
+#: static/js/models/enterprise_coupon_model.js
 msgid "This field is required."
 msgstr ""
 
 #: static/js/models/coupon_model.js
+#: static/js/models/enterprise_coupon_model.js
 msgid "This value must be a number."
 msgstr ""
 
 #: static/js/models/coupon_model.js
+#: static/js/models/enterprise_coupon_model.js
 msgid "This value must be a date."
 msgstr ""
 
@@ -37,16 +40,8 @@ msgid "This field must be empty or contain 1-16 alphanumeric characters."
 msgstr ""
 
 #: static/js/models/coupon_model.js
-msgid "A valid course ID is required"
-msgstr ""
-
-#: static/js/models/coupon_model.js
 #, javascript-format
 msgid "Email domain {%s} is invalid."
-msgstr ""
-
-#: static/js/models/coupon_model.js
-msgid "Enterprise Customer must be set if Enterprise Customer Catalog is set"
 msgstr ""
 
 #: static/js/models/coupon_model.js
@@ -58,11 +53,19 @@ msgid "Max uses for multi-use coupons must be higher than 2."
 msgstr ""
 
 #: static/js/models/coupon_model.js
-msgid "A valid Program UUID is required."
+msgid "Must occur before end date"
 msgstr ""
 
 #: static/js/models/coupon_model.js
-msgid "Must occur before end date"
+msgid "A valid course ID is required"
+msgstr ""
+
+#: static/js/models/coupon_model.js
+msgid "Enterprise Customer must be set if Enterprise Customer Catalog is set"
+msgstr ""
+
+#: static/js/models/coupon_model.js
+msgid "A valid Program UUID is required."
 msgstr ""
 
 #: static/js/models/course_model.js
@@ -163,6 +166,10 @@ msgstr ""
 msgid "All credit seats must designate a number of credit hours."
 msgstr ""
 
+#: static/js/models/enterprise_coupon_model.js
+msgid "This value must be a valid email."
+msgstr ""
+
 #: static/js/pages/basket_page.js
 msgid "Problem occurred during checkout. Please contact support."
 msgstr ""
@@ -204,14 +211,17 @@ msgid "State/Province (required)"
 msgstr ""
 
 #: static/js/pages/coupon_create_page.js
+#: static/js/pages/enterprise_coupon_create_page.js
 msgid "Create New Coupon"
 msgstr ""
 
 #: static/js/pages/coupon_detail_page.js
+#: static/js/pages/enterprise_coupon_detail_page.js
 msgid "View Coupon"
 msgstr ""
 
 #: static/js/pages/coupon_edit_page.js
+#: static/js/pages/enterprise_coupon_edit_page.js
 msgid "Edit Coupon"
 msgstr ""
 
@@ -233,6 +243,10 @@ msgstr ""
 
 #: static/js/pages/course_list_page.js
 msgid "Courses"
+msgstr ""
+
+#: static/js/pages/enterprise_coupon_list_page.js
+msgid "Enterprise Coupon Codes"
 msgstr ""
 
 #: static/js/pages/offer_page.js
@@ -272,14 +286,17 @@ msgid "Trailing comma not allowed."
 msgstr ""
 
 #: static/js/views/coupon_detail_view.js static/js/views/coupon_form_view.js
+#: static/js/views/enterprise_coupon_form_view.js
 msgid "Can be used once by one customer"
 msgstr ""
 
 #: static/js/views/coupon_detail_view.js static/js/views/coupon_form_view.js
+#: static/js/views/enterprise_coupon_form_view.js
 msgid "Can be used multiple times by multiple customers"
 msgstr ""
 
 #: static/js/views/coupon_detail_view.js static/js/views/coupon_form_view.js
+#: static/js/views/enterprise_coupon_form_view.js
 msgid "Can be used once by multiple customers"
 msgstr ""
 
@@ -297,6 +314,34 @@ msgstr ""
 
 #: static/js/views/coupon_form_view.js
 msgid "Create Coupon"
+msgstr ""
+
+#: static/js/views/coupon_list_view.js
+#: static/js/views/enterprise_coupon_list_view.js
+msgid "Name"
+msgstr ""
+
+#: static/js/views/coupon_list_view.js
+#: static/js/views/enterprise_coupon_list_view.js
+msgid "Created"
+msgstr ""
+
+#: static/js/views/coupon_list_view.js
+msgid "Custom Code"
+msgstr ""
+
+#: static/js/views/coupon_list_view.js
+#: static/js/views/enterprise_coupon_list_view.js
+msgid "Client"
+msgstr ""
+
+#: static/js/views/coupon_list_view.js
+msgid "Category"
+msgstr ""
+
+#: static/js/views/coupon_list_view.js
+#: static/js/views/enterprise_coupon_list_view.js
+msgid "Coupon Report"
 msgstr ""
 
 #: static/js/views/coupon_list_view.js static/js/views/course_list_view.js
@@ -325,30 +370,6 @@ msgstr ""
 #. Translators: _MENU_ is a placeholder. Do NOT translate it.
 #: static/js/views/coupon_list_view.js
 msgid "Display _MENU_ coupons"
-msgstr ""
-
-#: static/js/views/coupon_list_view.js
-msgid "Name"
-msgstr ""
-
-#: static/js/views/coupon_list_view.js
-msgid "Created"
-msgstr ""
-
-#: static/js/views/coupon_list_view.js
-msgid "Custom Code"
-msgstr ""
-
-#: static/js/views/coupon_list_view.js
-msgid "Client"
-msgstr ""
-
-#: static/js/views/coupon_list_view.js
-msgid "Category"
-msgstr ""
-
-#: static/js/views/coupon_list_view.js
-msgid "Coupon Report"
 msgstr ""
 
 #: static/js/views/course_form_view.js
@@ -410,6 +431,23 @@ msgstr ""
 
 #: static/js/views/dynamic_catalog_view.js
 msgid "Seat type"
+msgstr ""
+
+#: static/js/views/enterprise_coupon_detail_view.js
+#: static/js/views/enterprise_coupon_form_view.js
+msgid "Can be used multiple times by one customer"
+msgstr ""
+
+#: static/js/views/enterprise_coupon_list_view.js
+msgid "Status"
+msgstr ""
+
+#: static/js/views/enterprise_coupon_list_view.js
+msgid "Enterprise Customer"
+msgstr ""
+
+#: static/js/views/enterprise_coupon_list_view.js
+msgid "Enterprise Customer Catalog"
 msgstr ""
 
 #: static/js/views/form_view.js
