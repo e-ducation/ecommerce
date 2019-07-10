@@ -48,3 +48,7 @@ six
 stripe==1.70.0
 unicodecsv
 zeep==2.1.1
+
+# E-ducation requirements
+qrcode
+-e git+https://github.com/e-ducation/eliteu-payments#egg=eliteu-payments

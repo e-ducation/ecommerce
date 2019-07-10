@@ -9,7 +9,6 @@ import yaml
 from django.core.exceptions import ImproperlyConfigured
 
 from ecommerce.settings.base import *
-from ecommerce.settings.eliteu import *
 
 # Protocol used for construcing absolute callback URLs
 PROTOCOL = 'https'
@@ -48,8 +47,6 @@ ALLOWED_HOSTS = ['*']
 DICT_UPDATE_KEYS = ('JWT_AUTH',)
 
 CONFIG_FILE = get_env_setting('ECOMMERCE_CFG')
-
-ENABLE_ALIPAY_WECHATPAY = False
 
 with codecs.open(CONFIG_FILE, encoding='utf-8') as f:
     config_from_yaml = yaml.load(f)

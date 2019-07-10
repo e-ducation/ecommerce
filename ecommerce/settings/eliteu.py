@@ -103,6 +103,7 @@ ALIPAY_INFO = {
         "TRANSPORT": "",
         "DEFAULT_BANK": "",
         "IT_B_PAY": "",
-        "REFUND_URL": ""
+        "REFUND_URL": "",
+        "PAY_RESULT_URL": "",
     }
 }

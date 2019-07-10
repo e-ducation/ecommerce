@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
 
 from ecommerce.settings._oscar import *
+from ecommerce.settings.eliteu import *
 
 # PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory
@@ -655,3 +656,4 @@ SAILTHRU_KEY = None
 SAILTHRU_SECRET = None
 
 CURRENCY_SYMBOL = '$'
+ENABLE_ALIPAY_WECHATPAY = False
